@@ -8,10 +8,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU Affero General Public License for more details:
-<https://www.gnu.org/licenses/agpl-3.0.txt>
-
-This product includes software developed by the OpenSSL Project for use in \
-the OpenSSL Toolkit. <https://www.openssl.org/>";
+<https://www.gnu.org/licenses/agpl-3.0.txt>";
 
 /// A simple web based image pixel tracker.
 /// This program comes with ABSOLUTELY NO WARRANTY;
