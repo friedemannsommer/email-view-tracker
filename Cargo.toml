@@ -2,7 +2,40 @@
 name = "email-view-tracker"
 version = "0.1.0"
 edition = "2021"
+license = "AGPL-3.0"
+publish = false
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+codegen-units = 1
+lto = true
 
 [dependencies]
+chrono = "=0.4.22"
+fern = "=0.6.1"
+log = "=0.4.17"
+markup = "=0.13.1"
+actix-identity = "=0.5.2"
+
+[dependencies.actix-web]
+version = "=4.2.1"
+default-features = false
+features = ["compress-brotli", "compress-gzip", "compress-zstd", "macros"]
+
+[dependencies.actix-session]
+version = "=0.7.2"
+features = ["cookie-session"]
+
+[dependencies.clap]
+version = "=4.0.19"
+default-features = false
+features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env"]
+
+[dependencies.diesel]
+version = "=2.0.2"
+default-features = false
+features = ["postgres", "mysql", "uuid", "chrono", "r2d2"]
+
+[dependencies.uuid]
+version = "=1.2.1"
+default-features = false
+features = ["v7"]
