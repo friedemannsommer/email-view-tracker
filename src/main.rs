@@ -25,12 +25,13 @@
 use actix_identity as _;
 use actix_session as _;
 use actix_web as _;
-use chrono as _;
-use diesel as _;
 use markup as _;
-use uuid as _;
+use flate2 as _;
+use mysql_common as _;
 
-mod models;
+mod model;
+mod server;
+mod service;
 
 fn main() {
     let config = get_config();
@@ -40,12 +41,12 @@ fn main() {
     // TODO: implement DB pool and HTTP server
 }
 
-fn get_config() -> models::config::Config {
+fn get_config() -> model::config::Config {
     use clap::Parser;
 
-    let args: models::cli::Cli = models::cli::Cli::parse();
+    let args: model::cli::Cli = model::cli::Cli::parse();
 
-    models::config::Config {
+    model::config::Config {
         database_url: args.database_url,
         listen: parse_socket_listener(&args.listen),
         log_level: args.log_level,
@@ -53,22 +54,22 @@ fn get_config() -> models::config::Config {
     }
 }
 
-fn parse_socket_listener(input: &str) -> models::config::SocketListener {
+fn parse_socket_listener(input: &str) -> model::config::SocketListener {
     use std::str::FromStr;
 
     if let Ok(address) = std::net::SocketAddr::from_str(input) {
-        return models::config::SocketListener::Tcp(address);
+        return model::config::SocketListener::Tcp(address);
     }
 
     #[cfg(unix)]
     if let Ok(path) = std::path::PathBuf::from_str(input) {
-        return models::config::SocketListener::Unix(path);
+        return model::config::SocketListener::Unix(path);
     }
 
     panic!("Listener could not be parsed: '{}'", input)
 }
 
-fn init_logging(config: &models::config::Config) {
+fn init_logging(config: &model::config::Config) {
     if config.log_level != log::LevelFilter::Off {
         let mut logger = fern::Dispatch::new().level(config.log_level);
 

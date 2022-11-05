@@ -15,6 +15,7 @@ fern = "=0.6.1"
 log = "=0.4.17"
 markup = "=0.13.1"
 actix-identity = "=0.5.2"
+thiserror = "=1.0.37"
 
 [dependencies.actix-web]
 version = "=4.2.1"
@@ -30,12 +31,21 @@ version = "=4.0.19"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env"]
 
-[dependencies.diesel]
-version = "=2.0.2"
+[dependencies.mysql]
+version = "=22.2.0"
 default-features = false
-features = ["postgres", "mysql", "uuid", "chrono", "r2d2"]
+
+[dependencies.flate2]
+version = "*"
+default-features = false
+features = ["zlib"]
+
+[dependencies.mysql_common]
+version = "*"
+default-features = false
+features = ["chrono", "uuid"]
 
 [dependencies.uuid]
 version = "=1.2.1"
 default-features = false
-features = ["v7"]
+features = ["v4"]
