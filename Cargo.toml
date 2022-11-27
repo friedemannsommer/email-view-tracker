@@ -9,13 +9,23 @@ publish = false
 codegen-units = 1
 lto = true
 
+[workspace]
+members = [
+    ".",
+    "entity",
+    "migration"
+]
+
 [dependencies]
-chrono = "=0.4.22"
+actix-identity = "=0.5.2"
+chrono = "=0.4.23"
+entity = { path = "entity" }
 fern = "=0.6.1"
 log = "=0.4.17"
 markup = "=0.13.1"
-actix-identity = "=0.5.2"
+migration = { path = "migration" }
 thiserror = "=1.0.37"
+url = "=2.3.1"
 
 [dependencies.actix-web]
 version = "=4.2.1"
@@ -29,23 +39,14 @@ features = ["cookie-session"]
 [dependencies.clap]
 version = "=4.0.19"
 default-features = false
-features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env"]
-
-[dependencies.mysql]
-version = "=22.2.0"
-default-features = false
-
-[dependencies.flate2]
-version = "*"
-default-features = false
-features = ["zlib"]
-
-[dependencies.mysql_common]
-version = "*"
-default-features = false
-features = ["chrono", "uuid"]
+features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
 [dependencies.uuid]
-version = "=1.2.1"
+version = "=1.2.2"
 default-features = false
 features = ["v4"]
+
+[dependencies.sea-orm]
+version = "=0.10.4"
+default-features = false
+features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]

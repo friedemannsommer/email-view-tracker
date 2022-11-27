@@ -1,6 +1,79 @@
-const ABOUT_WITH_LICENSE: &str = "A simple web based image pixel tracker.
+use std::ffi::OsStr;
 
-This program is free software: you can redistribute it and/or modify it under the terms \
+#[derive(Clone)]
+pub struct SocketListenerParser;
+
+#[derive(Debug, Clone)]
+pub enum SocketListener {
+    Tcp(std::net::SocketAddr),
+    #[cfg(unix)]
+    Unix(std::path::PathBuf),
+}
+
+#[derive(Debug)]
+pub enum CliCommand {
+    HttpServer(super::config::ServerConfig),
+    MigrateCheck(super::config::CliConfig),
+    MigrateRun(super::config::CliConfig),
+}
+
+const HTTP_START: &str = "start";
+const MIGRATE: &str = "migrate";
+const MIGRATE_RUN: &str = "run";
+const MIGRATE_CHECK: &str = "check";
+const LOG_LEVEL_HELP: &str = "Log level to use. Keep in mind that this can include PII.";
+
+pub fn process_cli() -> Option<CliCommand> {
+    let matches = get_command().get_matches();
+
+    match matches.subcommand() {
+        Some((HTTP_START, sub_matches)) => {
+            return Some(CliCommand::HttpServer(parse_server_config(sub_matches)))
+        }
+        Some((MIGRATE, migrate_matches)) => match migrate_matches.subcommand() {
+            Some((MIGRATE_CHECK, sub_matches)) => {
+                return Some(CliCommand::MigrateCheck(parse_cli_config(sub_matches)))
+            }
+            Some((MIGRATE_RUN, sub_matches)) => {
+                return Some(CliCommand::MigrateRun(parse_cli_config(sub_matches)))
+            }
+            _ => {}
+        },
+        _ => {}
+    }
+
+    None
+}
+
+fn get_command() -> clap::Command {
+    let database_arg = clap::builder::Arg::new("database_url")
+        .short('d')
+        .long("database-url")
+        .env("DATABASE_URL")
+        .help("(MySQL / PostgreSQL) Database URL")
+        .required(true)
+        .value_parser(clap::builder::NonEmptyStringValueParser::new());
+    let log_level_arg = clap::builder::Arg::new("log_level")
+        .short('v')
+        .long("log-level")
+        .env("LOG_LEVEL")
+        .help(LOG_LEVEL_HELP)
+        .default_value("warn")
+        .value_parser(clap::value_parser!(log::LevelFilter))
+        .long_help(format!(
+            "{}\n{}",
+            LOG_LEVEL_HELP,
+            r#"Possible values include: "off", "error", "warn", "info", "debug", "trace"."#
+        ));
+
+    clap::command!()
+        .propagate_version(true)
+        .subcommand_required(true)
+        .arg_required_else_help(true)
+        .after_help(r#"This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it under certain conditions;
+Type `--help` for more details."#)
+        .after_long_help(r#"This program is free software: you can redistribute it and/or modify it under the terms \
 of the GNU Affero General Public License as published by the Free Software Foundation, \
 either version 3 of the License, or (at your option) any later version.
 
@@ -8,38 +81,96 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU Affero General Public License for more details:
-<https://www.gnu.org/licenses/agpl-3.0.txt>";
+<https://www.gnu.org/licenses/agpl-3.0.txt>"#)
+        .subcommand(
+            clap::Command::new(HTTP_START)
+                .about("Start HTTP server")
+                .arg(database_arg.clone())
+                .arg(clap::builder::Arg::new("bind_address")
+                    .short('l')
+                    .long("listen")
+                    .env("BIND_ADDRESS")
+                    .help("(IPv4 / IPv6):port or socket to listen on.")
+                    .required(true)
+                    .value_parser(SocketListenerParser)
+                )
+                .arg(clap::builder::Arg::new("worker_count")
+                    .short('w')
+                    .long("worker-count")
+                    .env("WORKER_COUNT")
+                    .help("Worker thread count for handling incoming HTTP requests.")
+                    .default_value("0")
+                    .value_parser(clap::value_parser!(u8))
+                )
+                .arg(log_level_arg.clone())
+                .arg_required_else_help(true),
+        )
+        .subcommand(
+            clap::Command::new(MIGRATE)
+                .about("Check or run migrations")
+                .subcommand_required(true)
+                .subcommand(clap::Command::new(MIGRATE_RUN).arg(database_arg.clone()).arg(log_level_arg.clone()))
+                .subcommand(clap::Command::new(MIGRATE_CHECK).arg(database_arg).arg(log_level_arg))
+        )
+}
 
-/// A simple web based image pixel tracker.
-/// This program comes with ABSOLUTELY NO WARRANTY;
-/// This is free software, and you are welcome to redistribute it under certain conditions;
-/// type `--help` for more details.
-#[derive(clap::Parser, Debug)]
-#[clap(version, about, long_about = Some(ABOUT_WITH_LICENSE))]
-pub struct Cli {
-    /// Database URL to connect to and store user / tracking data.
-    #[clap(short, long, env = "DATABASE_URL")]
-    pub database_url: String,
-    /// <IPv4 / IPv6>:port or socket to listen on.
-    #[clap(short, long, env = "LISTEN_HANDLE")]
-    pub listen: String,
-    /// Log level to use. Keep in mind that this can include PII.
-    /// Possible values include: "off", "error", "warn", "info", "debug", "trace".
-    #[clap(short = 'v', long, env = "LOG_LEVEL", default_value_t = log::LevelFilter::Warn)]
-    pub log_level: log::LevelFilter,
-    /// Worker thread count for handling incoming HTTP requests.
-    #[clap(short = 'w', long, env = "WORKER_COUNT", default_value_t = 0)]
-    pub worker_count: u8,
+fn parse_server_config(matches: &clap::ArgMatches) -> super::config::ServerConfig {
+    super::config::ServerConfig {
+        bind_address: matches
+            .get_one::<SocketListener>("bind_address")
+            .unwrap()
+            .clone(),
+        database_url: matches.get_one::<String>("database_url").unwrap().clone(),
+        log_level: *matches.get_one::<log::LevelFilter>("log_level").unwrap(),
+        worker_count: *matches.get_one::<u8>("worker_count").unwrap(),
+    }
+}
+
+fn parse_cli_config(matches: &clap::ArgMatches) -> super::config::CliConfig {
+    super::config::CliConfig {
+        database_url: matches.get_one::<String>("database_url").unwrap().clone(),
+        log_level: *matches.get_one::<log::LevelFilter>("log_level").unwrap(),
+    }
+}
+
+impl clap::builder::TypedValueParser for SocketListenerParser {
+    type Value = SocketListener;
+
+    fn parse_ref(
+        &self,
+        cmd: &clap::Command,
+        _arg: Option<&clap::Arg>,
+        value: &OsStr,
+    ) -> Result<Self::Value, clap::error::Error> {
+        use std::str::FromStr;
+
+        let input = match value.to_str() {
+            Some(val) => val.trim(),
+            None => {
+                return Err(clap::error::Error::new(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                )
+                .with_cmd(cmd))
+            }
+        };
+
+        if let Ok(address) = std::net::SocketAddr::from_str(input) {
+            return Ok(SocketListener::Tcp(address));
+        }
+
+        #[cfg(unix)]
+        if let Ok(socket_path) = std::path::PathBuf::from_str(input) {
+            return Ok(SocketListener::Unix(socket_path));
+        }
+
+        Err(clap::error::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd))
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::Cli;
-
     #[test]
     fn verify_cli() {
-        use clap::CommandFactory;
-
-        Cli::command().debug_assert()
+        super::get_command().debug_assert()
     }
 }

@@ -9,8 +9,7 @@
     pointer_structural_match,
     trivial_casts,
     trivial_numeric_casts,
-    unsafe_code,
-    unused_crate_dependencies
+    unsafe_code
 )]
 #![warn(
     clippy::cargo,
@@ -18,62 +17,54 @@
     clippy::perf,
     clippy::suspicious,
     rust_2018_idioms,
-    unused
+    unused,
+    unused_crate_dependencies
 )]
 #![allow(clippy::multiple_crate_versions)]
 
-use actix_identity as _;
-use actix_session as _;
-use actix_web as _;
-use markup as _;
-use flate2 as _;
-use mysql_common as _;
+use crate::model::config::LogConfig;
 
+mod database;
 mod model;
-mod server;
-mod service;
 
-fn main() {
-    let config = get_config();
-
-    init_logging(&config);
-    log::debug!("{:?}", &config);
-    // TODO: implement DB pool and HTTP server
-}
-
-fn get_config() -> model::config::Config {
-    use clap::Parser;
-
-    let args: model::cli::Cli = model::cli::Cli::parse();
-
-    model::config::Config {
-        database_url: args.database_url,
-        listen: parse_socket_listener(&args.listen),
-        log_level: args.log_level,
-        worker_count: args.worker_count,
+#[actix_web::main]
+async fn main() {
+    match model::cli::process_cli() {
+        Some(model::cli::CliCommand::HttpServer(config)) => {
+            init_logging(&config);
+            log::debug!("{:?}", config);
+        }
+        Some(model::cli::CliCommand::MigrateCheck(config)) => {
+            init_logging(&config);
+            log::debug!("{:?}", config);
+            database::migrate::process_database_migrate(database::migrate::MigrationAction::Check(
+                config,
+            ))
+            .await
+            .unwrap()
+        }
+        Some(model::cli::CliCommand::MigrateRun(config)) => {
+            init_logging(&config);
+            log::debug!("{:?}", config);
+            database::migrate::process_database_migrate(database::migrate::MigrationAction::Run(
+                config,
+            ))
+            .await
+            .unwrap()
+        }
+        _ => {
+            unreachable!("No command given")
+        }
     }
 }
 
-fn parse_socket_listener(input: &str) -> model::config::SocketListener {
-    use std::str::FromStr;
+fn init_logging(config: impl LogConfig) {
+    let log_level = config.get_log_level();
 
-    if let Ok(address) = std::net::SocketAddr::from_str(input) {
-        return model::config::SocketListener::Tcp(address);
-    }
+    if log_level != log::LevelFilter::Off {
+        let mut logger = fern::Dispatch::new().level(log_level);
 
-    #[cfg(unix)]
-    if let Ok(path) = std::path::PathBuf::from_str(input) {
-        return model::config::SocketListener::Unix(path);
-    }
-
-    panic!("Listener could not be parsed: '{}'", input)
-}
-
-fn init_logging(config: &model::config::Config) {
-    if config.log_level != log::LevelFilter::Off {
-        let mut logger = fern::Dispatch::new().level(config.log_level);
-
-        if config.log_level != log::LevelFilter::Error {
+        if log_level != log::LevelFilter::Error {
             logger = logger.chain(
                 fern::Dispatch::new()
                     .filter(|meta| meta.level() != log::LevelFilter::Error)
@@ -90,6 +81,6 @@ fn init_logging(config: &model::config::Config) {
             .apply()
             .expect("logging subscriber registration failed");
     } else {
-        log::set_max_level(config.log_level);
+        log::set_max_level(log_level);
     }
 }

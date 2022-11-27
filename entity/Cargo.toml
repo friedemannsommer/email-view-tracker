@@ -1,0 +1,27 @@
+[package]
+name = "entity"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "entity"
+path = "src/lib.rs"
+
+[dependencies.serde]
+version = "1.0"
+
+[dependencies.sea-orm]
+version = "=0.10.4"
+default-features = false
+features = ["macros", "with-chrono", "with-uuid"]
+
+[dependencies.uuid]
+version = "=1.2.2"
+default-features = false
+features = ["v4"]
+
+[dependencies.chrono]
+version = "=0.4.23"
+default-features = false
+features = ["serde"]
