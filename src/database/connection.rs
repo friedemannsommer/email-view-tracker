@@ -17,9 +17,9 @@ pub async fn get_database_connection(
     let url = url::Url::parse(database_url).map_err(ConnectError::from)?;
     let mut connect_options = sea_orm::ConnectOptions::new(database_url.to_string());
 
-    if log_level != log::LevelFilter::Off {
+    if log_level != log::LevelFilter::Off && log_level >= log::LevelFilter::Debug {
         connect_options.sqlx_logging(true);
-        connect_options.sqlx_logging_level(log_level);
+        connect_options.sqlx_logging_level(log::LevelFilter::Debug);
     }
 
     for (name, value) in url.query_pairs() {

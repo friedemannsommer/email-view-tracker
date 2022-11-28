@@ -1,7 +1,11 @@
 use std::ffi::OsStr;
+use std::io::Write;
 
 #[derive(Clone)]
 pub struct SocketListenerParser;
+
+#[derive(Clone)]
+pub struct StringWithLength(LengthComparison);
 
 #[derive(Debug, Clone)]
 pub enum SocketListener {
@@ -15,6 +19,12 @@ pub enum CliCommand {
     HttpServer(super::config::ServerConfig),
     MigrateCheck(super::config::CliConfig),
     MigrateRun(super::config::CliConfig),
+}
+
+#[derive(Clone)]
+enum LengthComparison {
+    Equal(usize),
+    GreaterOrEqual(usize),
 }
 
 const HTTP_START: &str = "start";
@@ -94,6 +104,22 @@ See the GNU Affero General Public License for more details:
                     .required(true)
                     .value_parser(SocketListenerParser)
                 )
+                .arg(clap::builder::Arg::new("cookie_secret")
+                    .short('c')
+                    .long("cookie-secret")
+                    .env("COOKIE_SECRET")
+                    .help("Secret will be used to encrypt session cookie. Must contain at least 64 bytes.")
+                    .required(true)
+                    .value_parser(StringWithLength(LengthComparison::Equal(64)))
+                )
+                .arg(clap::builder::Arg::new("password_secret")
+                    .short('p')
+                    .long("password-secret")
+                    .env("PASSWORD_SECRET")
+                    .help("Secret will be used as salt for password hashing. Must contain at least 16 bytes.")
+                    .required(true)
+                    .value_parser(StringWithLength(LengthComparison::GreaterOrEqual(16)))
+                )
                 .arg(clap::builder::Arg::new("worker_count")
                     .short('w')
                     .long("worker-count")
@@ -109,8 +135,18 @@ See the GNU Affero General Public License for more details:
             clap::Command::new(MIGRATE)
                 .about("Check or run migrations")
                 .subcommand_required(true)
-                .subcommand(clap::Command::new(MIGRATE_RUN).arg(database_arg.clone()).arg(log_level_arg.clone()))
-                .subcommand(clap::Command::new(MIGRATE_CHECK).arg(database_arg).arg(log_level_arg))
+                .subcommand(
+                    clap::Command::new(MIGRATE_RUN)
+                        .arg(database_arg.clone())
+                        .arg(log_level_arg.clone())
+                        .arg_required_else_help(true)
+                )
+                .subcommand(
+                    clap::Command::new(MIGRATE_CHECK)
+                        .arg(database_arg)
+                        .arg(log_level_arg)
+                        .arg_required_else_help(true)
+                )
         )
 }
 
@@ -120,8 +156,13 @@ fn parse_server_config(matches: &clap::ArgMatches) -> super::config::ServerConfi
             .get_one::<SocketListener>("bind_address")
             .unwrap()
             .clone(),
+        cookie_secret: matches.get_one::<String>("cookie_secret").unwrap().clone(),
         database_url: matches.get_one::<String>("database_url").unwrap().clone(),
         log_level: *matches.get_one::<log::LevelFilter>("log_level").unwrap(),
+        password_secret: matches
+            .get_one::<String>("password_secret")
+            .unwrap()
+            .clone(),
         worker_count: *matches.get_one::<u8>("worker_count").unwrap(),
     }
 }
@@ -164,6 +205,51 @@ impl clap::builder::TypedValueParser for SocketListenerParser {
         }
 
         Err(clap::error::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd))
+    }
+}
+
+impl clap::builder::TypedValueParser for StringWithLength {
+    type Value = String;
+
+    fn parse_ref(
+        &self,
+        cmd: &clap::Command,
+        _arg: Option<&clap::Arg>,
+        value: &OsStr,
+    ) -> Result<Self::Value, clap::error::Error> {
+        let input = match value.to_str() {
+            Some(val) => val.trim(),
+            None => {
+                return Err(clap::error::Error::new(
+                    clap::error::ErrorKind::MissingRequiredArgument,
+                )
+                .with_cmd(cmd))
+            }
+        };
+        let input_length = input.len();
+
+        if match self.0 {
+            LengthComparison::Equal(length) => input_length != length,
+            LengthComparison::GreaterOrEqual(length) => input_length < length,
+        } {
+            writeln!(
+                std::io::stderr().lock(),
+                "'{}' ({}) doesn't fulfill length requirement of {} characters",
+                input,
+                input_length,
+                match self.0 {
+                    LengthComparison::Equal(length) | LengthComparison::GreaterOrEqual(length) =>
+                        length,
+                },
+            )
+            .unwrap();
+
+            return Err(
+                clap::error::Error::new(clap::error::ErrorKind::ValueValidation).with_cmd(cmd),
+            );
+        }
+
+        Ok(input.to_string())
     }
 }
 

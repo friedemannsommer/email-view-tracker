@@ -7,8 +7,10 @@ pub trait LogConfig {
 #[derive(Debug)]
 pub struct ServerConfig {
     pub bind_address: SocketListener,
+    pub cookie_secret: String,
     pub database_url: String,
     pub log_level: log::LevelFilter,
+    pub password_secret: String,
     pub worker_count: u8,
 }
 

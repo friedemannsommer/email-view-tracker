@@ -23,7 +23,7 @@ impl MigrationTrait for Migration {
                     .table(User::Table)
                     .if_not_exists()
                     .col(ColumnDef::new(User::Id).uuid().not_null().primary_key())
-                    .col(ColumnDef::new(User::Name).string().not_null())
+                    .col(ColumnDef::new(User::Name).string().not_null().unique_key())
                     .col(ColumnDef::new(User::Password).string().not_null())
                     .col(ColumnDef::new(User::CreatedAt).date_time().not_null())
                     .col(ColumnDef::new(User::UpdatedAt).date_time().not_null())
@@ -33,6 +33,10 @@ impl MigrationTrait for Migration {
 
         manager
             .create_index(Index::create().col(User::Id).to_owned())
+            .await?;
+
+        manager
+            .create_index(Index::create().col(User::Name).to_owned())
             .await
     }
 

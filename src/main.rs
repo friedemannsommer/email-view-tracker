@@ -22,10 +22,12 @@
 )]
 #![allow(clippy::multiple_crate_versions)]
 
-use crate::model::config::LogConfig;
+use crate::{model::config::LogConfig, server::serve::start_http_service, utility::password::SALT};
 
 mod database;
 mod model;
+mod server;
+mod utility;
 
 #[actix_web::main]
 async fn main() {
@@ -33,6 +35,9 @@ async fn main() {
         Some(model::cli::CliCommand::HttpServer(config)) => {
             init_logging(&config);
             log::debug!("{:?}", config);
+            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+                .unwrap();
+            start_http_service(config).await.unwrap()
         }
         Some(model::cli::CliCommand::MigrateCheck(config)) => {
             init_logging(&config);
