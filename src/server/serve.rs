@@ -21,7 +21,6 @@ pub async fn start_http_service(
     let database_connection = get_database_connection(&config.database_url, config.log_level)
         .await
         .map_err(HttpServeError::from)?;
-    // this leads to revocation of every session on restart
     let instance_key = actix_web::cookie::Key::from(config.cookie_secret.as_bytes());
     let mut http_server = actix_web::HttpServer::new(move || {
         actix_web::App::new()
