@@ -9,7 +9,8 @@
     pointer_structural_match,
     trivial_casts,
     trivial_numeric_casts,
-    unsafe_code
+    unsafe_code,
+    unused_crate_dependencies
 )]
 #![warn(
     clippy::cargo,
@@ -17,12 +18,18 @@
     clippy::perf,
     clippy::suspicious,
     rust_2018_idioms,
-    unused,
-    unused_crate_dependencies
+    unused
 )]
 #![allow(clippy::multiple_crate_versions)]
 
-use crate::{model::config::LogConfig, server::serve::start_http_service, utility::password::SALT};
+use crate::{
+    model::config::LogConfig,
+    server::serve::start_http_service,
+    utility::{
+        password::SALT,
+        user::{change_user_password, create_user},
+    },
+};
 
 mod database;
 mod model;
@@ -57,7 +64,21 @@ async fn main() {
             .await
             .unwrap()
         }
-        _ => {
+        Some(model::cli::CliCommand::UserCreate(config)) => {
+            init_logging(&config);
+            log::debug!("{:?}", config);
+            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+                .unwrap();
+            log::info!("{:?}", create_user(config).await.unwrap());
+        }
+        Some(model::cli::CliCommand::UserChangePassword(config)) => {
+            init_logging(&config);
+            log::debug!("{:?}", config);
+            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+                .unwrap();
+            log::info!("{:?}", change_user_password(config).await.unwrap())
+        }
+        None => {
             unreachable!("No command given")
         }
     }

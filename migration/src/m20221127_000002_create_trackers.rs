@@ -36,21 +36,16 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(Tracker::UserId).uuid().not_null())
                     .col(ColumnDef::new(Tracker::CreatedAt).date_time().not_null())
                     .col(ColumnDef::new(Tracker::UpdatedAt).date_time().not_null())
+                    .foreign_key(
+                        ForeignKey::create()
+                            .name("fk_user_tracker_relation")
+                            .from(Tracker::Table, Tracker::UserId)
+                            .to(User::Table, User::Id)
+                            .on_update(ForeignKeyAction::Cascade)
+                            .on_delete(ForeignKeyAction::Cascade),
+                    )
                     .to_owned(),
             )
-            .await?;
-
-        manager
-            .create_foreign_key(
-                ForeignKey::create()
-                    .from(User::Table, User::Id)
-                    .to(Tracker::Table, Tracker::UserId)
-                    .to_owned(),
-            )
-            .await?;
-
-        manager
-            .create_index(Index::create().col(Tracker::Id).to_owned())
             .await
     }
 

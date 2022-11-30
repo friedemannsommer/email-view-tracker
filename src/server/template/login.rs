@@ -10,18 +10,14 @@ pub fn template() -> String {
                 }
                 div."input-group" {
                     label["for"="userPassword"] { "Password" }
-                    input[id="userPassword", "type"="password", autocomplete="current-password", required];
+                    input[id="userPassword", "type"="password", name="password", autocomplete="current-password", required];
                 }
                 button["type"="submit"] {
                     "Login"
                 }
             }
         },
-        header: markup::new! {
-            style {
-                /* TODO: add CSS */
-            }
-        },
+        header: "",
         title: "Login",
     }
     .to_string()

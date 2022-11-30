@@ -17,8 +17,10 @@ pub enum SocketListener {
 #[derive(Debug)]
 pub enum CliCommand {
     HttpServer(super::config::ServerConfig),
-    MigrateCheck(super::config::CliConfig),
-    MigrateRun(super::config::CliConfig),
+    MigrateCheck(super::config::MigrateConfig),
+    MigrateRun(super::config::MigrateConfig),
+    UserCreate(super::config::UserConfig),
+    UserChangePassword(super::config::UserConfig),
 }
 
 #[derive(Clone)]
@@ -31,6 +33,9 @@ const HTTP_START: &str = "start";
 const MIGRATE: &str = "migrate";
 const MIGRATE_RUN: &str = "run";
 const MIGRATE_CHECK: &str = "check";
+const USER: &str = "user";
+const USER_CREATE: &str = "create";
+const USER_CHANGE_PASSWORD: &str = "change-password";
 const LOG_LEVEL_HELP: &str = "Log level to use. Keep in mind that this can include PII.";
 
 pub fn process_cli() -> Option<CliCommand> {
@@ -42,10 +47,21 @@ pub fn process_cli() -> Option<CliCommand> {
         }
         Some((MIGRATE, migrate_matches)) => match migrate_matches.subcommand() {
             Some((MIGRATE_CHECK, sub_matches)) => {
-                return Some(CliCommand::MigrateCheck(parse_cli_config(sub_matches)))
+                return Some(CliCommand::MigrateCheck(parse_migrate_config(sub_matches)))
             }
             Some((MIGRATE_RUN, sub_matches)) => {
-                return Some(CliCommand::MigrateRun(parse_cli_config(sub_matches)))
+                return Some(CliCommand::MigrateRun(parse_migrate_config(sub_matches)))
+            }
+            _ => {}
+        },
+        Some((USER, user_matches)) => match user_matches.subcommand() {
+            Some((USER_CREATE, sub_matches)) => {
+                return Some(CliCommand::UserCreate(parse_user_config(sub_matches)))
+            }
+            Some((USER_CHANGE_PASSWORD, sub_matches)) => {
+                return Some(CliCommand::UserChangePassword(parse_user_config(
+                    sub_matches,
+                )))
             }
             _ => {}
         },
@@ -75,6 +91,25 @@ fn get_command() -> clap::Command {
             LOG_LEVEL_HELP,
             r#"Possible values include: "off", "error", "warn", "info", "debug", "trace"."#
         ));
+    let password_secret = clap::builder::Arg::new("password_secret")
+        .short('p')
+        .long("password-secret")
+        .env("PASSWORD_SECRET")
+        .help("Secret will be used as salt for password hashing. Must contain at least 16 bytes.")
+        .required(true)
+        .value_parser(StringWithLength(LengthComparison::GreaterOrEqual(16)));
+    let username = clap::builder::Arg::new("username")
+        .short('u')
+        .long("username")
+        .help("Name for a given user.")
+        .required(true)
+        .value_parser(clap::builder::NonEmptyStringValueParser::new());
+    let password = clap::builder::Arg::new("password")
+        .short('P')
+        .long("password")
+        .help("Password for a given user.")
+        .required(true)
+        .value_parser(clap::builder::NonEmptyStringValueParser::new());
 
     clap::command!()
         .propagate_version(true)
@@ -112,14 +147,7 @@ See the GNU Affero General Public License for more details:
                     .required(true)
                     .value_parser(StringWithLength(LengthComparison::Equal(64)))
                 )
-                .arg(clap::builder::Arg::new("password_secret")
-                    .short('p')
-                    .long("password-secret")
-                    .env("PASSWORD_SECRET")
-                    .help("Secret will be used as salt for password hashing. Must contain at least 16 bytes.")
-                    .required(true)
-                    .value_parser(StringWithLength(LengthComparison::GreaterOrEqual(16)))
-                )
+                .arg(password_secret.clone())
                 .arg(clap::builder::Arg::new("worker_count")
                     .short('w')
                     .long("worker-count")
@@ -143,7 +171,30 @@ See the GNU Affero General Public License for more details:
                 )
                 .subcommand(
                     clap::Command::new(MIGRATE_CHECK)
+                        .arg(database_arg.clone())
+                        .arg(log_level_arg.clone())
+                        .arg_required_else_help(true)
+                )
+        )
+        .subcommand(
+            clap::Command::new(USER)
+                .about("Create or update users")
+                .subcommand_required(true)
+                .subcommand(
+                    clap::Command::new(USER_CREATE)
+                        .arg(database_arg.clone())
+                        .arg(password_secret.clone())
+                        .arg(username.clone())
+                        .arg(password.clone())
+                        .arg(log_level_arg.clone())
+                        .arg_required_else_help(true)
+                )
+                .subcommand(
+                    clap::Command::new(USER_CHANGE_PASSWORD)
                         .arg(database_arg)
+                        .arg(password_secret)
+                        .arg(username)
+                        .arg(password)
                         .arg(log_level_arg)
                         .arg_required_else_help(true)
                 )
@@ -167,10 +218,23 @@ fn parse_server_config(matches: &clap::ArgMatches) -> super::config::ServerConfi
     }
 }
 
-fn parse_cli_config(matches: &clap::ArgMatches) -> super::config::CliConfig {
-    super::config::CliConfig {
+fn parse_migrate_config(matches: &clap::ArgMatches) -> super::config::MigrateConfig {
+    super::config::MigrateConfig {
         database_url: matches.get_one::<String>("database_url").unwrap().clone(),
         log_level: *matches.get_one::<log::LevelFilter>("log_level").unwrap(),
+    }
+}
+
+fn parse_user_config(matches: &clap::ArgMatches) -> super::config::UserConfig {
+    super::config::UserConfig {
+        database_url: matches.get_one::<String>("database_url").unwrap().clone(),
+        log_level: *matches.get_one::<log::LevelFilter>("log_level").unwrap(),
+        password: matches.get_one::<String>("password").unwrap().clone(),
+        password_secret: matches
+            .get_one::<String>("password_secret")
+            .unwrap()
+            .clone(),
+        username: matches.get_one::<String>("username").unwrap().clone(),
     }
 }
 

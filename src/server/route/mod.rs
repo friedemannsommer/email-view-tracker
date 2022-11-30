@@ -1,3 +1,5 @@
+pub mod home;
 pub mod login;
 pub mod logout;
-pub mod not_found;
+pub mod shared;
+pub mod profile;

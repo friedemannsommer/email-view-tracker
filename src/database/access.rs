@@ -1,4 +1,4 @@
-use sea_orm::EntityTrait;
+use sea_orm::{EntityTrait, QueryFilter};
 
 #[derive(thiserror::Error, Debug)]
 pub enum AccessError {
@@ -6,6 +6,8 @@ pub enum AccessError {
     Database(#[from] sea_orm::DbErr),
     #[error("Entity with ID ({0}) doesn't exist")]
     NotFound(uuid::Uuid),
+    #[error("User with name ({0}) doesn't exist")]
+    UserNotFound(String),
 }
 
 pub async fn get_user(
@@ -19,6 +21,22 @@ pub async fn get_user(
     }
 
     Err(AccessError::NotFound(user_id))
+}
+
+pub async fn get_user_by_name(
+    db: &sea_orm::DatabaseConnection,
+    username: &str,
+) -> Result<entity::user::ActiveModel, AccessError> {
+    let user_opt = entity::user::Entity::find()
+        .filter(sea_orm::sea_query::expr::Expr::col(entity::user::Column::Name).eq(username))
+        .one(db)
+        .await?;
+
+    if let Some(user) = user_opt {
+        return Ok(user.into());
+    }
+
+    Err(AccessError::UserNotFound(username.to_string()))
 }
 
 pub async fn add_user(

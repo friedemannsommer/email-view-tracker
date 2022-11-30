@@ -15,9 +15,18 @@ pub struct ServerConfig {
 }
 
 #[derive(Debug)]
-pub struct CliConfig {
+pub struct MigrateConfig {
     pub database_url: String,
     pub log_level: log::LevelFilter,
+}
+
+#[derive(Debug)]
+pub struct UserConfig {
+    pub database_url: String,
+    pub log_level: log::LevelFilter,
+    pub password: String,
+    pub password_secret: String,
+    pub username: String,
 }
 
 impl LogConfig for &ServerConfig {
@@ -26,7 +35,13 @@ impl LogConfig for &ServerConfig {
     }
 }
 
-impl LogConfig for &CliConfig {
+impl LogConfig for &MigrateConfig {
+    fn get_log_level(&self) -> log::LevelFilter {
+        self.log_level
+    }
+}
+
+impl LogConfig for &UserConfig {
     fn get_log_level(&self) -> log::LevelFilter {
         self.log_level
     }

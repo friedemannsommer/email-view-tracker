@@ -1,10 +1,10 @@
 use migration::MigratorTrait;
 
-use crate::model::config::CliConfig;
+use crate::model::config::MigrateConfig;
 
 pub enum MigrationAction {
-    Check(CliConfig),
-    Run(CliConfig),
+    Check(MigrateConfig),
+    Run(MigrateConfig),
 }
 
 pub async fn process_database_migrate(

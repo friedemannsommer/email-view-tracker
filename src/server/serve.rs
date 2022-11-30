@@ -52,9 +52,9 @@ pub async fn start_http_service(
             .service(super::route::login::get_login)
             .service(super::route::login::post_login)
             .service(super::route::logout::get_logout)
-            .default_service(
-                actix_web::web::route().to(super::route::not_found::redirect_not_found),
-            )
+            .service(super::route::home::get_home)
+            .service(super::route::profile::get_profile)
+            .service(super::route::profile::post_profile)
     })
     .backlog(4096)
     .shutdown_timeout(5);
