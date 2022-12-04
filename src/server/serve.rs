@@ -55,6 +55,11 @@ pub async fn start_http_service(
             .service(super::route::home::get_home)
             .service(super::route::profile::get_profile)
             .service(super::route::profile::post_profile)
+            .service(super::route::tracker::get_create_tracker)
+            .service(super::route::tracker::post_create_tracker)
+            .service(super::route::tracker::get_edit_tracker)
+            .service(super::route::tracker::post_edit_tracker)
+            .service(super::route::tracker::get_track_impression)
     })
     .backlog(4096)
     .shutdown_timeout(5);

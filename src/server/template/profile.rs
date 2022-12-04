@@ -1,11 +1,11 @@
 use super::{base::Layout, header::Header};
 
-pub fn template(user: &entity::user::ActiveModel) -> String {
-    let title = "Profile";
+const TITLE: &str = "Profile";
 
+pub fn template(user: &entity::user::ActiveModel) -> String {
     Layout {
         body: markup::new! {
-            @Header { title, user }
+            @Header { title: TITLE, user }
             form[method="POST"] {
                 div."input-group" {
                     label["for"="username"] { "Username" }
@@ -21,7 +21,7 @@ pub fn template(user: &entity::user::ActiveModel) -> String {
             }
         },
         header: "",
-        title,
+        title: TITLE,
     }
         .to_string()
 }

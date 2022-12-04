@@ -6,7 +6,7 @@ pub struct Model {
     #[sea_orm(primary_key)]
     pub id: Uuid,
     pub name: String,
-    pub views: u64,
+    pub views: i64,
     pub user_id: Uuid,
     pub created_at: chrono::NaiveDateTime,
     pub updated_at: chrono::NaiveDateTime,

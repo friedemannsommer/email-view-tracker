@@ -54,14 +54,33 @@ pub async fn add_user(
 pub async fn get_tracker(
     db: &sea_orm::DatabaseConnection,
     user_id: uuid::Uuid,
+    tracker_id: uuid::Uuid,
 ) -> Result<entity::tracker::ActiveModel, AccessError> {
-    let tracker_opt = entity::tracker::Entity::find_by_id(user_id).one(db).await?;
+    let tracker_opt = entity::tracker::Entity::find_by_id(tracker_id)
+        .filter(sea_orm::sea_query::expr::Expr::col(entity::tracker::Column::UserId).eq(user_id))
+        .one(db)
+        .await?;
 
     if let Some(tracker) = tracker_opt {
         return Ok(tracker.into());
     }
 
-    Err(AccessError::NotFound(user_id))
+    Err(AccessError::NotFound(tracker_id))
+}
+
+pub async fn get_tracker_unauthorized(
+    db: &sea_orm::DatabaseConnection,
+    tracker_id: uuid::Uuid,
+) -> Result<entity::tracker::ActiveModel, AccessError> {
+    let tracker_opt = entity::tracker::Entity::find_by_id(tracker_id)
+        .one(db)
+        .await?;
+
+    if let Some(tracker) = tracker_opt {
+        return Ok(tracker.into());
+    }
+
+    Err(AccessError::NotFound(tracker_id))
 }
 
 pub async fn add_tracker(

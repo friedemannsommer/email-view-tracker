@@ -29,7 +29,7 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(Tracker::Name).string().not_null())
                     .col(
                         ColumnDef::new(Tracker::Views)
-                            .big_unsigned()
+                            .big_integer()
                             .not_null()
                             .default(0),
                     )

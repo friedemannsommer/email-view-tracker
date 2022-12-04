@@ -29,7 +29,7 @@ pub async fn fetch_user(
     identity: &actix_identity::Identity,
 ) -> Result<entity::user::ActiveModel, UserOperationError> {
     get_user(
-        &database,
+        database,
         uuid::Uuid::from_str(
             &identity
                 .id()
