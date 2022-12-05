@@ -8,11 +8,15 @@ markup::define! {
         html {
             head {
                 title { @title }
+                @Stylesheet { path: "/css/shared.css" }
                 @header
             }
             body {
                 @body
             }
         }
+    }
+    Stylesheet<'path>(path: &'path str) {
+        link[rel="stylesheet", href={path}, fetchpriority="high"];
     }
 }

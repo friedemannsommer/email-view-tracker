@@ -74,7 +74,7 @@ pub async fn post_create_tracker(
 }
 
 #[actix_web::get("/tracker/update/{id}")]
-pub async fn get_edit_tracker(
+pub async fn get_update_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     user_id: actix_identity::Identity,
     tracker_id: actix_web::web::Path<uuid::Uuid>,
@@ -97,7 +97,7 @@ pub async fn get_edit_tracker(
 }
 
 #[actix_web::post("/tracker/update/{id}")]
-pub async fn post_edit_tracker(
+pub async fn post_update_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     user_id: actix_identity::Identity,
     tracker_id: actix_web::web::Path<uuid::Uuid>,

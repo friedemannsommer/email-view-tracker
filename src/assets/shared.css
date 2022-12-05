@@ -1,0 +1,54 @@
+html, body, h1, h2, p, div {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 1.75em;
+    line-height: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+    line-height: 1.75em;
+}
+
+a, p, span, label, input, button {
+    font-size: 1em;
+    line-height: 1.25em;
+}
+
+a, a:visited {
+    text-decoration: underline;
+}
+
+label, button {
+    font-weight: bold;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+form div.input-group {
+    margin: 0 auto 1em;
+}
+
+form div.input-group label {
+    display: block;
+}
+
+form div.input-group input {
+    border: 1px solid #000;
+    display: block;
+    margin: 0.5em 0 0;
+    padding: 0;
+}
+
+button {
+    border: 1px solid #000;
+    cursor: pointer;
+    line-height: 1.5em;
+}

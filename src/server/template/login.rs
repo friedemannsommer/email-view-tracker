@@ -1,4 +1,4 @@
-use super::base::Layout;
+use super::base::{Layout, Stylesheet};
 
 pub fn template() -> String {
     Layout {
@@ -17,7 +17,7 @@ pub fn template() -> String {
                 }
             }
         },
-        header: "",
+        header: Stylesheet { path: "/css/login.css" },
         title: "Login",
     }
     .to_string()

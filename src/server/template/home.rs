@@ -1,4 +1,7 @@
-use super::{base::Layout, header::Header};
+use super::{
+    base::{Layout, Stylesheet},
+    header::Header,
+};
 
 const TITLE: &str = "Home";
 
@@ -7,10 +10,10 @@ pub fn template(user: &entity::user::ActiveModel, trackers: &[entity::tracker::M
         body: markup::new! {
             @Header { title: TITLE, user }
             section.trackers {
-                div.header {
+                header {
                     h2 { "Trackers" }
                     a[href="/tracker/create"] {
-                        button { "Create" }
+                        button { "Create tracker" }
                     }
                 }
                 table {
@@ -40,7 +43,9 @@ pub fn template(user: &entity::user::ActiveModel, trackers: &[entity::tracker::M
                 }
             }
         },
-        header: "",
+        header: Stylesheet {
+            path: "/css/user.css",
+        },
         title: TITLE,
     }
     .to_string()

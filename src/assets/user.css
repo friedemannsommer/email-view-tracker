@@ -1,0 +1,50 @@
+body {
+    width: calc(100% - 2em);
+    padding: 0 1em;
+}
+
+header {
+    align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+header p {
+    font-size: 1em;
+    line-height: 1.25em;
+    margin: 1em 0;
+}
+
+div.container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+}
+
+table tr {
+    border-bottom: 1px solid #000;
+    padding: 0.5em 0;
+}
+
+table thead th, table tbody td {
+    border-right: 1px solid #000;
+    line-height: 2em;
+    padding: 0 0.5em;
+    text-align: center;
+}
+
+table thead th:last-child, table tbody td:last-child, table tbody td a > button, div.button-group button, div.button-group a > button, div.button-group a > button:last-child {
+    border-right: unset;
+}
+
+table tbody td a:last-child > button, div.button-group button:last-child, div.button-group a:last-child > button {
+    border-right: 1px solid #000;
+}

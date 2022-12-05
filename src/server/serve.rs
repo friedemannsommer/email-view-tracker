@@ -49,6 +49,21 @@ pub async fn start_http_service(
                 actix_web::middleware::Logger::new("%a '%r' %s %T"),
             ))
             .wrap(get_default_headers_middleware())
+            .service(crate::static_asset_route!(
+                "/css/shared.css",
+                "../assets/shared.css",
+                "text/css"
+            ))
+            .service(crate::static_asset_route!(
+                "/css/login.css",
+                "../assets/login.css",
+                "text/css"
+            ))
+            .service(crate::static_asset_route!(
+                "/css/user.css",
+                "../assets/user.css",
+                "text/css"
+            ))
             .service(super::route::login::get_login)
             .service(super::route::login::post_login)
             .service(super::route::logout::get_logout)
@@ -57,8 +72,9 @@ pub async fn start_http_service(
             .service(super::route::profile::post_profile)
             .service(super::route::tracker::get_create_tracker)
             .service(super::route::tracker::post_create_tracker)
-            .service(super::route::tracker::get_edit_tracker)
-            .service(super::route::tracker::post_edit_tracker)
+            .service(super::route::tracker::get_update_tracker)
+            .service(super::route::tracker::post_update_tracker)
+            .service(super::route::tracker::get_delete_tracker)
             .service(super::route::tracker::get_track_impression)
     })
     .backlog(4096)
