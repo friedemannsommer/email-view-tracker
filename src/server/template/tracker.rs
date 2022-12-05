@@ -21,7 +21,7 @@ pub fn template(
                 form[method="POST"] {
                     div."input-group" {
                         label["for"="name"] { "Name" }
-                        input["id"="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or_default()}];
+                        input["id"="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or_default()}, autofocus];
                     }
                     @if has_tracker {
                         div."input-group" {

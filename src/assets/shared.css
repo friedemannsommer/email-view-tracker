@@ -44,11 +44,12 @@ form div.input-group input {
     border: 1px solid #000;
     display: block;
     margin: 0.5em 0 0;
-    padding: 0;
+    padding: 0 0.25em;
 }
 
 button {
     border: 1px solid #000;
     cursor: pointer;
     line-height: 1.5em;
+    background: unset;
 }

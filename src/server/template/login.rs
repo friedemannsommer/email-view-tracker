@@ -6,7 +6,7 @@ pub fn template() -> String {
             form[method="post"] {
                 div."input-group" {
                     label["for"="username"] { "Username" }
-                    input["id"="username", "type"="text", name="username", required];
+                    input["id"="username", "type"="text", name="username", required, autofocus];
                 }
                 div."input-group" {
                     label["for"="userPassword"] { "Password" }

@@ -34,6 +34,10 @@ table tr {
     padding: 0.5em 0;
 }
 
+table tbody tr:last-child {
+    border: unset;
+}
+
 table thead th, table tbody td {
     border-right: 1px solid #000;
     line-height: 2em;
@@ -47,4 +51,23 @@ table thead th:last-child, table tbody td:last-child, table tbody td a > button,
 
 table tbody td a:last-child > button, div.button-group button:last-child, div.button-group a:last-child > button {
     border-right: 1px solid #000;
+}
+
+nav.pagination {
+    align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    margin: 1em auto 0;
+    padding: 0;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+nav.pagination > * {
+    display: inline-block;
+    margin: 0 0.5em 0 0;
+}
+
+nav.pagination > *:last-child {
+    margin: 0;
 }
