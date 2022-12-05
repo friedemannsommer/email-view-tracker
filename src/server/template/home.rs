@@ -9,7 +9,9 @@ pub fn template(user: &entity::user::ActiveModel, trackers: &[entity::tracker::M
             section.trackers {
                 div.header {
                     h2 { "Trackers" }
-                    a[href="/tracker/create", target="_self"] { "Create" }
+                    a[href="/tracker/create"] {
+                        button { "Create" }
+                    }
                 }
                 table {
                     thead {
@@ -25,8 +27,11 @@ pub fn template(user: &entity::user::ActiveModel, trackers: &[entity::tracker::M
                                 td { @tracker.name }
                                 td { @tracker.views }
                                 td {
-                                    a[href={format!("/tracker/edit/{}", tracker.id)}, target="_self"] {
+                                    a[href={format!("/tracker/update/{}", tracker.id)}] {
                                         button { "Edit" }
+                                    }
+                                    a[href={format!("/tracker/delete/{}", tracker.id)}] {
+                                        button { "Delete" }
                                     }
                                 }
                             }

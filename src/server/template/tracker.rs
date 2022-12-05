@@ -5,8 +5,11 @@ const TITLE: &str = "Tracker";
 pub fn template(
     user: &entity::user::ActiveModel,
     tracker: Option<&entity::tracker::ActiveModel>,
+    is_ssl: bool,
+    hostname: &str,
 ) -> String {
     let has_tracker = tracker.is_some();
+    let tracker_id = tracker.map(|tracker| tracker.id.as_ref().to_string());
 
     Layout {
         body: markup::new! {
@@ -14,7 +17,7 @@ pub fn template(
             form[method="POST"] {
                 div."input-group" {
                     label["for"="name"] { "Name" }
-                    input["id"="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or("")}];
+                    input["id"="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or_default()}];
                 }
                 @if has_tracker {
                     div."input-group" {
@@ -25,15 +28,29 @@ pub fn template(
                         label { "Tracking code" }
                         code {
                             pre {
-                                r#"<img src="https://server/track/"#
-                                {tracker.map(|tracker|tracker.id.as_ref().to_string()).unwrap_or_default()}
+                                r#"<img src=""#
+                                {if is_ssl {"https"} else {"http"}}
+                                "://"
+                                {hostname}
+                                "/track/"
+                                {tracker_id.as_deref().unwrap_or_default()}
                                 r#"" />"#
                             }
                         }
                     }
                 }
-                button["type"="submit"] {
-                    @if tracker.is_some() { "Update" } else { "Create" }
+                div."button-group" {
+                    button["type"="submit"] {
+                        @if has_tracker { "Update" } else { "Create" }
+                    }
+                    a[href="/home"] {
+                        button["type"="button"] { "Cancel" }
+                    }
+                    @if has_tracker {
+                        a[href={format!("/tracker/delete/{}", tracker_id.as_deref().unwrap_or_default())}] {
+                            button["type"="button"] { "Delete" }
+                        }
+                    }
                 }
             }
         },

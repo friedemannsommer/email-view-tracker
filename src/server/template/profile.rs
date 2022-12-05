@@ -15,8 +15,13 @@ pub fn template(user: &entity::user::ActiveModel) -> String {
                     label["for"="userPassword"] { "Password" }
                     input[id="userPassword", "type"="password", name="password", autocomplete="new-password"];
                 }
-                button["type"="submit"] {
-                    "Update"
+                div."button-group" {
+                    button["type"="submit"] {
+                        "Update"
+                    }
+                    a[href="/home"] {
+                        button["type"="button"] { "Cancel" }
+                    }
                 }
             }
         },

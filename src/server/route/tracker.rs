@@ -33,6 +33,7 @@ pub enum OperationError {
 pub async fn get_create_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     user_id: actix_identity::Identity,
+    req_info: actix_web::dev::ConnectionInfo,
 ) -> actix_web::HttpResponse {
     let data = match fetch_request_data(&database, &user_id, None).await {
         Ok(val) => val,
@@ -42,7 +43,12 @@ pub async fn get_create_tracker(
         }
     };
 
-    tracker_response(&data.user, None)
+    tracker_response(
+        &data.user,
+        None,
+        req_info.scheme() == "https",
+        req_info.host(),
+    )
 }
 
 #[actix_web::post("/tracker/create")]
@@ -62,16 +68,17 @@ pub async fn post_create_tracker(
     actix_web::HttpResponse::SeeOther()
         .insert_header((
             actix_web::http::header::LOCATION,
-            format!("/tracker/edit/{}", tracker_id),
+            format!("/tracker/update/{}", tracker_id),
         ))
         .finish()
 }
 
-#[actix_web::get("/tracker/edit/{id}")]
+#[actix_web::get("/tracker/update/{id}")]
 pub async fn get_edit_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     user_id: actix_identity::Identity,
     tracker_id: actix_web::web::Path<uuid::Uuid>,
+    req_info: actix_web::dev::ConnectionInfo,
 ) -> actix_web::HttpResponse {
     let data = match fetch_request_data(&database, &user_id, Some(tracker_id.to_owned())).await {
         Ok(val) => val,
@@ -81,15 +88,21 @@ pub async fn get_edit_tracker(
         }
     };
 
-    tracker_response(&data.user, data.tracker.as_ref())
+    tracker_response(
+        &data.user,
+        data.tracker.as_ref(),
+        req_info.scheme() == "https",
+        req_info.host(),
+    )
 }
 
-#[actix_web::post("/tracker/edit/{id}")]
+#[actix_web::post("/tracker/update/{id}")]
 pub async fn post_edit_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     user_id: actix_identity::Identity,
     tracker_id: actix_web::web::Path<uuid::Uuid>,
     body: actix_web::web::Form<TrackerData>,
+    req_info: actix_web::dev::ConnectionInfo,
 ) -> actix_web::HttpResponse {
     let data = match fetch_request_data(&database, &user_id, Some(tracker_id.to_owned())).await {
         Ok(val) => val,
@@ -117,7 +130,37 @@ pub async fn post_edit_tracker(
         }
     }
 
-    tracker_response(&data.user, Some(&tracker))
+    tracker_response(
+        &data.user,
+        Some(&tracker),
+        req_info.scheme() == "https",
+        req_info.host(),
+    )
+}
+
+#[actix_web::get("/tracker/delete/{id}")]
+pub async fn get_delete_tracker(
+    database: actix_web::web::Data<sea_orm::DatabaseConnection>,
+    user_id: actix_identity::Identity,
+    tracker_id: actix_web::web::Path<uuid::Uuid>,
+) -> actix_web::HttpResponse {
+    let tracker = match fetch_tracker(&database, &user_id, tracker_id.to_owned()).await {
+        Ok(val) => val,
+        Err(error) => {
+            log::error!("{:?}", error);
+            return server_error();
+        }
+    };
+
+    match tracker.delete(database.as_ref()).await {
+        Ok(_) => actix_web::HttpResponse::SeeOther()
+            .insert_header((actix_web::http::header::LOCATION, "/home"))
+            .finish(),
+        Err(error) => {
+            log::error!("{:?}", error);
+            server_error()
+        }
+    }
 }
 
 #[actix_web::get("/track/{id}")]
@@ -165,6 +208,8 @@ async fn fetch_request_data(
 fn tracker_response(
     user: &entity::user::ActiveModel,
     tracker: Option<&entity::tracker::ActiveModel>,
+    is_ssl: bool,
+    hostname: &str,
 ) -> actix_web::HttpResponse {
-    html_response(tracker::template(user, tracker))
+    html_response(tracker::template(user, tracker, is_ssl, hostname))
 }
