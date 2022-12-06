@@ -1,7 +1,7 @@
 use crate::server::model::tracker_paginator::{OrderType, TrackerOrderColumn, TrackerPagination};
 
 use super::{
-    base::{Layout, Stylesheet},
+    base::{ButtonLink, Layout, ThemeColor},
     header::Header,
 };
 
@@ -23,9 +23,7 @@ pub fn template(
             section.trackers {
                 header {
                     h2 { "Trackers" }
-                    a[href="/tracker/create"] {
-                        button { "Create tracker" }
-                    }
+                    @ButtonLink{ url: "/tracker/create", label: "Create tracker", theme: ThemeColor::Success, ..Default::default() }
                 }
                 table {
                     thead {
@@ -65,12 +63,8 @@ pub fn template(
                                 td { @tracker.created_at.format(DATE_TIME_FMT).to_string() }
                                 td { @tracker.updated_at.format(DATE_TIME_FMT).to_string() }
                                 td {
-                                    a[href={format!("/tracker/update/{}", tracker.id)}] {
-                                        button { "Edit" }
-                                    }
-                                    a[href={format!("/tracker/delete/{}", tracker.id)}] {
-                                        button { "Delete" }
-                                    }
+                                    @ButtonLink{ url: &format!("/tracker/update/{}", tracker.id), label: "Edit", ..Default::default() }
+                                    @ButtonLink{ url: &format!("/tracker/delete/{}", tracker.id), label: "Delete", theme: ThemeColor::Danger, ..Default::default() }
                                 }
                             }
                         }
@@ -95,9 +89,7 @@ pub fn template(
                 }
             }
         },
-        header: Stylesheet {
-            path: "/css/user.css",
-        },
+        header: super::shared::get_default_header(super::shared::StylesheetVariant::User),
         title: TITLE,
     }
     .to_string()

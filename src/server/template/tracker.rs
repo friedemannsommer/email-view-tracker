@@ -1,5 +1,5 @@
 use super::{
-    base::{Layout, Stylesheet},
+    base::{Button, ButtonLink, ButtonType, Layout, ThemeColor},
     header::Header,
 };
 
@@ -21,7 +21,7 @@ pub fn template(
                 form[method="POST"] {
                     div."input-group" {
                         label["for"="name"] { "Name" }
-                        input["id"="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or_default()}, autofocus];
+                        input[id="name", "type"="text", name="name", value={tracker.map(|tracker|tracker.name.as_ref().as_str()).unwrap_or_default()}, autofocus];
                     }
                     @if has_tracker {
                         div."input-group" {
@@ -33,35 +33,27 @@ pub fn template(
                             code {
                                 pre {
                                     r#"<img src=""#
-                                    {if is_ssl {"https"} else {"http"}}
+                                    @if is_ssl { "https" } else { "http" }
                                     "://"
-                                    {hostname}
+                                    @hostname
                                     "/track/"
-                                    {tracker_id.as_deref().unwrap_or_default()}
+                                    @tracker_id.as_deref().unwrap_or_default()
                                     r#"" />"#
                                 }
                             }
                         }
                     }
                     div."button-group" {
-                        button["type"="submit"] {
-                            @if has_tracker { "Update" } else { "Create" }
-                        }
-                        a[href="/home"] {
-                            button["type"="button"] { "Cancel" }
-                        }
+                        @Button{ label: if has_tracker { "Update" } else { "Create" }, button_type: ButtonType::Submit, theme: ThemeColor::Primary }
+                        @ButtonLink{ url: "/home", label: "Cancel", ..Default::default() }
                         @if has_tracker {
-                            a[href={format!("/tracker/delete/{}", tracker_id.as_deref().unwrap_or_default())}] {
-                                button["type"="button"] { "Delete" }
-                            }
+                            @ButtonLink{ url: &format!("/tracker/delete/{}", tracker_id.as_deref().unwrap_or_default()), label: "Delete", theme: ThemeColor::Danger, ..Default::default() }
                         }
                     }
                 }
             }
         },
-        header: Stylesheet {
-            path: "/css/user.css",
-        },
+        header: super::shared::get_default_header(super::shared::StylesheetVariant::User),
         title: TITLE,
     }
         .to_string()

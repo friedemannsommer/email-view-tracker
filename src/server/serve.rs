@@ -50,19 +50,34 @@ pub async fn start_http_service(
             ))
             .wrap(get_default_headers_middleware())
             .service(crate::static_asset_route!(
-                "/css/shared.css",
-                "../assets/shared.css",
-                "text/css"
-            ))
-            .service(crate::static_asset_route!(
                 "/css/login.css",
-                "../assets/login.css",
+                concat!(env!("OUT_DIR"), "/login.css"),
                 "text/css"
             ))
             .service(crate::static_asset_route!(
                 "/css/user.css",
-                "../assets/user.css",
+                concat!(env!("OUT_DIR"), "/user.css"),
                 "text/css"
+            ))
+            .service(crate::static_asset_route!(
+                "/fonts/montserrat/regular.woff2",
+                "../assets/fonts/montserrat/regular.woff2",
+                "font/woff2"
+            ))
+            .service(crate::static_asset_route!(
+                "/fonts/montserrat/regular.woff",
+                "../assets/fonts/montserrat/regular.woff",
+                "font/woff"
+            ))
+            .service(crate::static_asset_route!(
+                "/fonts/montserrat/bold.woff2",
+                "../assets/fonts/montserrat/bold.woff2",
+                "font/woff2"
+            ))
+            .service(crate::static_asset_route!(
+                "/fonts/montserrat/bold.woff",
+                "../assets/fonts/montserrat/bold.woff",
+                "font/woff"
             ))
             .service(super::route::login::get_login)
             .service(super::route::login::post_login)

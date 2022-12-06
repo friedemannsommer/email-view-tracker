@@ -57,3 +57,6 @@ features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 version = "=0.4.1"
 default-features = false
 features = ["std", "password-hash", "parallel"]
+
+[build-dependencies]
+lightningcss = "=1.0.0-alpha.38"

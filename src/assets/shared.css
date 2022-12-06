@@ -1,5 +1,6 @@
-html, body, h1, h2, p, div {
-    font-family: "Open Sans", sans-serif;
+html, body, h1, h2, p, input, button, div, header, footer, form {
+    font-family: "montserrat", "Open Sans", "Droid Sans", sans-serif;
+    font-weight: normal;
     margin: 0;
     padding: 0;
 }
@@ -20,16 +21,60 @@ a, p, span, label, input, button {
 }
 
 a, a:visited {
+    color: #0d6efd;
     text-decoration: underline;
 }
 
-label, button {
-    font-weight: bold;
+label {
+    font-weight: 700;
 }
 
-body {
-    width: 100%;
+html, body {
+    background: #fff;
+    color: #212529;
     min-height: 100vh;
+    width: 100%;
+}
+
+button {
+    border: unset;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 1.5em;
+    padding: 0 0.25em;
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+button:active {
+    box-shadow: 0 0 4px 1px #000;
+    outline: unset;
+    position: relative;
+    z-index: 1;
+}
+
+.dark {
+    background: #343a40;
+    color: #fff;
+}
+
+.primary {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.danger {
+    background: #dc3545;
+    color: #fff;
+}
+
+.success {
+    background: #198754;
+    color: #fff;
+}
+
+footer {
+    margin: 1em 0 0;
+    text-align: center;
 }
 
 form div.input-group {
@@ -41,15 +86,41 @@ form div.input-group label {
 }
 
 form div.input-group input {
-    border: 1px solid #000;
+    background: inherit;
+    border: 1px solid #ced4da;
     display: block;
+    line-height: 1.5em;
     margin: 0.5em 0 0;
     padding: 0 0.25em;
+    transition: box-shadow 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
-button {
-    border: 1px solid #000;
-    cursor: pointer;
-    line-height: 1.5em;
-    background: unset;
+form div.input-group input:focus, form div.input-group input:focus-visible {
+    border: 1px solid #0d6efd;
+    box-shadow: 0 0 5px 2px #0d6efd;
+    outline: unset;
+}
+
+div.container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url('/fonts/montserrat/regular.woff2') format('woff2'),
+    url('/fonts/montserrat/regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'montserrat';
+    src: url('/fonts/montserrat/bold.woff2') format('woff2'),
+    url('/fonts/montserrat/bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }

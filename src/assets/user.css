@@ -16,12 +16,6 @@ header p {
     margin: 1em 0;
 }
 
-div.container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -45,12 +39,8 @@ table thead th, table tbody td {
     text-align: center;
 }
 
-table thead th:last-child, table tbody td:last-child, table tbody td a > button, div.button-group button, div.button-group a > button, div.button-group a > button:last-child {
+table thead th:last-child, table tbody td:last-child {
     border-right: unset;
-}
-
-table tbody td a:last-child > button, div.button-group button:last-child, div.button-group a:last-child > button {
-    border-right: 1px solid #000;
 }
 
 nav.pagination {

@@ -1,6 +1,6 @@
 #[macro_export]
 macro_rules! static_asset_route {
-    ($path: literal, $name: literal, $mediaType: literal) => {{
+    ($path: literal, $name: expr, $mediaType: literal) => {{
         async fn handle_static_asset() -> ::actix_web::HttpResponse {
             let mut response = actix_web::HttpResponse::build(actix_web::http::StatusCode::OK)
                 .body(actix_web::web::Bytes::from_static(include_bytes!($name)));
