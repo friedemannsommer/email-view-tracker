@@ -81,7 +81,7 @@ pub fn template(
                         " / "
                         span { {tracker_pagination.number_of_pages} }
                     }
-                    @if tracker_pagination.page < tracker_pagination.number_of_pages - 1 {
+                    @if tracker_pagination.page < tracker_pagination.number_of_pages.saturating_sub(1) {
                         a[href={get_pagination_url(tracker_pagination, tracker_pagination.page + 1)}] {
                             "Next page"
                         }
