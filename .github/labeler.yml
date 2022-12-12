@@ -1,0 +1,38 @@
+asset:
+  - any: [ 'src/**/*.png', 'src/**/*.ico', 'src/**/*.txt', 'src/**/*.jpg' ]
+
+rust:
+  - any: [ '**/*.rs' ]
+
+app-entity:
+  - any: [ 'entity/src/**/*.rs' ]
+
+app-migration:
+  - any: [ 'migration/src/**/*.rs' ]
+
+app:
+  - any: [ 'src/**/*.rs' ]
+
+css:
+  - any: [ 'src/**/*.css' ]
+
+cargo:
+  - any: [ '**/Cargo.toml', '**/Cargo.lock' ]
+
+cargo-deny:
+  - any: [ '**/deny.toml' ]
+
+license:
+  - any: [ 'LICENSE' ]
+
+markdown:
+  - any: [ '**/*.md' ]
+
+template:
+  - any: [ 'src/templates/**/*.rs' ]
+
+git:
+  - any: [ '**/*.gitignore', '**/*.gitattributes' ]
+
+github:
+  - any: [ '.github/**/*' ]
