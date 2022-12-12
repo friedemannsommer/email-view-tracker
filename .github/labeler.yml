@@ -36,3 +36,6 @@ git:
 
 github:
   - any: [ '.github/**/*' ]
+
+docker-compose:
+  - any: [ 'docker-compose.yml' ]
