@@ -22,9 +22,11 @@ pub async fn start_http_service(
         .await
         .map_err(HttpServeError::from)?;
     let instance_key = actix_web::cookie::Key::from(config.cookie_secret.as_bytes());
+    let ip_session = super::lib::ip_session::IpSession::default();
     let mut http_server = actix_web::HttpServer::new(move || {
         actix_web::App::new()
             .app_data(actix_web::web::Data::new(database_connection.clone()))
+            .app_data(actix_web::web::Data::new(ip_session.clone()))
             .wrap(actix_web::middleware::Compress::default())
             .wrap(actix_web::middleware::NormalizePath::new(
                 actix_web::middleware::TrailingSlash::Trim,

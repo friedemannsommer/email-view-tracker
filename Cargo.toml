@@ -21,6 +21,8 @@ actix-identity = "=0.5.2"
 chrono = "=0.4.23"
 entity = { path = "entity" }
 fern = "=0.6.1"
+getrandom = "=0.2.8"
+hex = "=0.4.3"
 log = "=0.4.17"
 markup = "=0.13.1"
 migration = { path = "migration" }
@@ -57,6 +59,11 @@ features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 version = "=0.4.1"
 default-features = false
 features = ["std", "password-hash", "parallel"]
+
+[dependencies.moka]
+version = "=0.9.6"
+default-features = false
+features = ["atomic64", "dash"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.38"

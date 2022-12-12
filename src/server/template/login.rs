@@ -1,6 +1,6 @@
 use super::base::{Button, ButtonType, Layout, ThemeColor};
 
-pub fn template() -> String {
+pub fn template(csrf_token: &str) -> String {
     Layout {
         body: markup::new! {
             form[method="post"] {
@@ -12,6 +12,7 @@ pub fn template() -> String {
                     label["for"="userPassword"] { "Password" }
                     input[id="userPassword", "type"="password", name="password", autocomplete="current-password", required];
                 }
+                input["type"="hidden", name="csrf_token", value={csrf_token}];
                 @Button{ label: "Login", button_type: ButtonType::Submit, theme: ThemeColor::Primary }
             }
         },

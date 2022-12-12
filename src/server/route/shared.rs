@@ -1,9 +1,6 @@
 pub fn html_response(html: String) -> actix_web::HttpResponse {
     actix_web::HttpResponse::Ok()
-        .insert_header((
-            actix_web::http::header::CONTENT_TYPE,
-            "text/html; charset=utf-8",
-        ))
+        .content_type("text/html; charset=utf-8")
         .body(html)
 }
 
