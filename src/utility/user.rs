@@ -44,15 +44,15 @@ pub async fn create_user(user_config: UserConfig) -> Result<uuid::Uuid, UserOper
     let database = get_database_connection(&user_config.database_url, user_config.log_level)
         .await
         .map_err(map_connect_error)?;
-    let timestamp = chrono::Utc::now();
+    let timestamp = time::OffsetDateTime::now_utc();
     let user = entity::user::ActiveModel {
         id: ActiveValue::NotSet,
         name: ActiveValue::Set(user_config.username),
         password: ActiveValue::Set(
             hash_password(&user_config.password).map_err(UserOperationError::from)?,
         ),
-        created_at: ActiveValue::Set(timestamp.naive_utc()),
-        updated_at: ActiveValue::Set(timestamp.naive_utc()),
+        created_at: ActiveValue::Set(timestamp.clone()),
+        updated_at: ActiveValue::Set(timestamp),
     };
 
     add_user(&database, user).await.map_err(map_access_error)
@@ -64,14 +64,14 @@ pub async fn change_user_password(
     let database = get_database_connection(&user_config.database_url, user_config.log_level)
         .await
         .map_err(map_connect_error)?;
-    let timestamp = chrono::Utc::now();
+    let timestamp = time::OffsetDateTime::now_utc();
     let mut user = get_user_by_name(&database, &user_config.username)
         .await
         .map_err(map_access_error)?;
 
     user.password =
         ActiveValue::Set(hash_password(&user_config.password).map_err(UserOperationError::from)?);
-    user.updated_at = ActiveValue::Set(timestamp.naive_utc());
+    user.updated_at = ActiveValue::Set(timestamp);
 
     Ok(user
         .save(&database)

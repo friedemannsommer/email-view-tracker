@@ -63,7 +63,7 @@ pub async fn post_profile(
     }
 
     if user.is_changed() {
-        user.updated_at = ActiveValue::Set(chrono::Utc::now().naive_utc());
+        user.updated_at = ActiveValue::Set(time::OffsetDateTime::now_utc());
 
         match user.save(database.as_ref()).await {
             Ok(next_user) => user = next_user,

@@ -14,14 +14,14 @@ version = "1.0"
 [dependencies.sea-orm]
 version = "=0.10.5"
 default-features = false
-features = ["macros", "with-chrono", "with-uuid"]
+features = ["macros", "with-time", "with-uuid"]
 
 [dependencies.uuid]
 version = "=1.2.2"
 default-features = false
 features = ["v4"]
 
-[dependencies.chrono]
-version = "=0.4.23"
+[dependencies.time]
+version = "=0.3.17"
 default-features = false
-features = ["serde"]
+features = ["std", "serde"]

@@ -11,7 +11,6 @@ struct UserQuery {
 }
 
 const TITLE: &str = "Home";
-const DATE_TIME_FMT: &str = "%Y-%m-%d %H:%M:%S";
 
 pub fn template(
     user: &entity::user::ActiveModel,
@@ -60,8 +59,8 @@ pub fn template(
                             tr {
                                 td { @tracker.name }
                                 td { @tracker.views }
-                                td { @tracker.created_at.format(DATE_TIME_FMT).to_string() }
-                                td { @tracker.updated_at.format(DATE_TIME_FMT).to_string() }
+                                td { @format_date_time(&tracker.created_at) }
+                                td { @format_date_time(&tracker.updated_at) }
                                 td {
                                     @ButtonLink{ url: &format!("/tracker/update/{}", tracker.id), label: "Edit", ..Default::default() }
                                     @ButtonLink{ url: &format!("/tracker/delete/{}", tracker.id), label: "Delete", theme: ThemeColor::Danger, ..Default::default() }
@@ -93,6 +92,18 @@ pub fn template(
         title: TITLE,
     }
     .to_string()
+}
+
+fn format_date_time(date_time: &time::OffsetDateTime) -> String {
+    format!(
+        "{}-{:02}-{:02} {:02}:{:02}:{:02}",
+        date_time.year(),
+        date_time.month() as u8,
+        date_time.day(),
+        date_time.hour(),
+        date_time.minute(),
+        date_time.second()
+    )
 }
 
 fn get_pagination_url(pagination: &TrackerPagination<'_>, page: u64) -> String {

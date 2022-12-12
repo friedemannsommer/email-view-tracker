@@ -34,8 +34,16 @@ impl MigrationTrait for Migration {
                             .default(0),
                     )
                     .col(ColumnDef::new(Tracker::UserId).uuid().not_null())
-                    .col(ColumnDef::new(Tracker::CreatedAt).date_time().not_null())
-                    .col(ColumnDef::new(Tracker::UpdatedAt).date_time().not_null())
+                    .col(
+                        ColumnDef::new(Tracker::CreatedAt)
+                            .timestamp_with_time_zone()
+                            .not_null(),
+                    )
+                    .col(
+                        ColumnDef::new(Tracker::UpdatedAt)
+                            .timestamp_with_time_zone()
+                            .not_null(),
+                    )
                     .foreign_key(
                         ForeignKey::create()
                             .name("fk_user_tracker_relation")

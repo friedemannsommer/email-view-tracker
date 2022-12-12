@@ -119,7 +119,7 @@ pub async fn post_update_tracker(
     }
 
     if tracker.is_changed() {
-        tracker.updated_at = ActiveValue::Set(chrono::Utc::now().naive_utc());
+        tracker.updated_at = ActiveValue::Set(time::OffsetDateTime::now_utc());
 
         match tracker.save(database.as_ref()).await {
             Ok(result) => tracker = result,

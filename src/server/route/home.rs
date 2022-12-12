@@ -15,8 +15,6 @@ use super::shared::{html_response, server_error};
 #[derive(thiserror::Error, Debug)]
 enum PaginationError {
     #[error(transparent)]
-    DateTime(#[from] chrono::format::ParseError),
-    #[error(transparent)]
     Database(#[from] sea_orm::DbErr),
 }
 

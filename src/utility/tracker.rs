@@ -32,12 +32,12 @@ pub async fn create_tracker(
     identity: &actix_identity::Identity,
     tracker_name: String,
 ) -> Result<uuid::Uuid, TrackerOperationError> {
-    let timestamp = chrono::Utc::now();
+    let timestamp = time::OffsetDateTime::now_utc();
     let tracker = entity::tracker::ActiveModel {
-        created_at: ActiveValue::Set(timestamp.naive_utc()),
+        created_at: ActiveValue::Set(timestamp.clone()),
         id: ActiveValue::NotSet,
         name: ActiveValue::Set(tracker_name),
-        updated_at: ActiveValue::Set(timestamp.naive_utc()),
+        updated_at: ActiveValue::Set(timestamp),
         user_id: ActiveValue::Set(user_id_from_identity(identity)?),
         views: ActiveValue::Set(0),
     };
