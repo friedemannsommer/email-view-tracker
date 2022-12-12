@@ -10,6 +10,8 @@ on:
       - ".github/workflows/ci.yml"
       - "Cargo.lock"
       - "Cargo.toml"
+      - "entity/**"
+      - "migrate/**"
       - "src/**"
   pull_request:
     branches:
@@ -18,6 +20,8 @@ on:
       - ".github/workflows/ci.yml"
       - "Cargo.lock"
       - "Cargo.toml"
+      - "entity/**"
+      - "migrate/**"
       - "src/**"
 
 permissions:
