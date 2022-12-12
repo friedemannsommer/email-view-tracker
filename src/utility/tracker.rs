@@ -34,7 +34,7 @@ pub async fn create_tracker(
 ) -> Result<uuid::Uuid, TrackerOperationError> {
     let timestamp = time::OffsetDateTime::now_utc();
     let tracker = entity::tracker::ActiveModel {
-        created_at: ActiveValue::Set(timestamp.clone()),
+        created_at: ActiveValue::Set(timestamp),
         id: ActiveValue::NotSet,
         name: ActiveValue::Set(tracker_name),
         updated_at: ActiveValue::Set(timestamp),

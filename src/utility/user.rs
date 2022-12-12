@@ -51,7 +51,7 @@ pub async fn create_user(user_config: UserConfig) -> Result<uuid::Uuid, UserOper
         password: ActiveValue::Set(
             hash_password(&user_config.password).map_err(UserOperationError::from)?,
         ),
-        created_at: ActiveValue::Set(timestamp.clone()),
+        created_at: ActiveValue::Set(timestamp),
         updated_at: ActiveValue::Set(timestamp),
     };
 
