@@ -29,6 +29,11 @@ pub enum OperationError {
     Tracker(#[from] crate::utility::tracker::TrackerOperationError),
 }
 
+const BEACON_GIF: [u8; 35] = [
+    71, 73, 70, 56, 55, 97, 1, 0, 1, 0, 128, 0, 0, 252, 106, 108, 0, 0, 0, 44, 0, 0, 0, 0, 1, 0, 1,
+    0, 0, 2, 2, 68, 1, 0, 59,
+];
+
 #[actix_web::get("/tracker/create")]
 pub async fn get_create_tracker(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
@@ -187,7 +192,9 @@ pub async fn get_track_impression(
         return server_error();
     }
 
-    actix_web::HttpResponse::NoContent().finish()
+    actix_web::HttpResponse::Ok()
+        .content_type("image/gif")
+        .body(BEACON_GIF.as_ref())
 }
 
 async fn fetch_request_data(
