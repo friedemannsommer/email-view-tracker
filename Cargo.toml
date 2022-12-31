@@ -26,7 +26,7 @@ log = "=0.4.17"
 markup = "=0.13.1"
 migration = { path = "migration" }
 once_cell = "=1.17.0"
-serde = "=1.0.151"
+serde = "=1.0.152"
 thiserror = "=1.0.38"
 url = "=2.3.1"
 
