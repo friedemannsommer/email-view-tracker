@@ -34,11 +34,8 @@ fn main() {
                     )
                     .unwrap()
                     .to_css(PrinterOptions {
-                        analyze_dependencies: None,
                         minify: true,
-                        pseudo_classes: None,
-                        source_map: None,
-                        targets: None,
+                        ..Default::default()
                     })
                     .unwrap()
                     .code,
