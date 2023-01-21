@@ -111,6 +111,7 @@ fn login_response() -> actix_web::HttpResponse {
                     .finish(),
             )
             .content_type("text/html; charset=utf-8")
+            .insert_header((actix_web::http::header::CACHE_CONTROL, "private, no-cache"))
             .body(login::template(&csrf_token))
     } else {
         log::error!("{:?}", csrf_res.unwrap_err());
@@ -122,7 +123,7 @@ fn redirect_user() -> actix_web::HttpResponse {
     actix_web::HttpResponse::SeeOther()
         .cookie(
             actix_web::cookie::Cookie::build(CSRF_COOKIE_NAME, "")
-                .expires(actix_web::cookie::time::OffsetDateTime::UNIX_EPOCH)
+                .expires(time::OffsetDateTime::UNIX_EPOCH)
                 .finish(),
         )
         .insert_header((actix_web::http::header::LOCATION, "/home"))

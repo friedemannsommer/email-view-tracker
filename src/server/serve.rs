@@ -42,7 +42,7 @@ pub async fn start_http_service(
                 .cookie_content_security(CookieContentSecurity::Private)
                 .session_lifecycle(
                     actix_session::config::BrowserSession::default()
-                        .state_ttl(actix_web::cookie::time::Duration::days(1)),
+                        .state_ttl(time::Duration::days(1)),
                 )
                 .build(),
             )
@@ -53,32 +53,32 @@ pub async fn start_http_service(
             .wrap(get_default_headers_middleware())
             .service(crate::static_asset_route!(
                 "/css/login.css",
-                concat!(env!("OUT_DIR"), "/login.css"),
+                include!(concat!(env!("OUT_DIR"), "/login.css.rs")),
                 "text/css"
             ))
             .service(crate::static_asset_route!(
                 "/css/user.css",
-                concat!(env!("OUT_DIR"), "/user.css"),
+                include!(concat!(env!("OUT_DIR"), "/user.css.rs")),
                 "text/css"
             ))
             .service(crate::static_asset_route!(
                 "/fonts/montserrat/regular.woff2",
-                "../assets/fonts/montserrat/regular.woff2",
+                include!(concat!(env!("OUT_DIR"), "/regular.woff2.rs")),
                 "font/woff2"
             ))
             .service(crate::static_asset_route!(
                 "/fonts/montserrat/regular.woff",
-                "../assets/fonts/montserrat/regular.woff",
+                include!(concat!(env!("OUT_DIR"), "/regular.woff.rs")),
                 "font/woff"
             ))
             .service(crate::static_asset_route!(
                 "/fonts/montserrat/bold.woff2",
-                "../assets/fonts/montserrat/bold.woff2",
+                include!(concat!(env!("OUT_DIR"), "/bold.woff2.rs")),
                 "font/woff2"
             ))
             .service(crate::static_asset_route!(
                 "/fonts/montserrat/bold.woff",
-                "../assets/fonts/montserrat/bold.woff",
+                include!(concat!(env!("OUT_DIR"), "/bold.woff.rs")),
                 "font/woff"
             ))
             .service(super::route::login::get_login)
