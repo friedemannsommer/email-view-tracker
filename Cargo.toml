@@ -67,7 +67,8 @@ features = ["atomic64", "dash"]
 [dependencies.time]
 version = "=0.3.17"
 default-features = false
-features = ["std"]
+features = ["std", "macros"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.39"
+time = "=0.3.17"
