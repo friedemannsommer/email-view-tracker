@@ -109,14 +109,14 @@ fn format_date_time(date_time: &time::OffsetDateTime) -> String {
 fn get_pagination_url(pagination: &TrackerPagination<'_>, page: u64) -> String {
     let mut queries: Vec<String> = Vec::with_capacity(3);
 
-    queries.push(format!("page={}", page));
+    queries.push(format!("page={page}"));
 
     if let Some(column) = &pagination.user_query.order_by {
-        queries.push(format!("order_by={}", column));
+        queries.push(format!("order_by={column}"));
     }
 
     if let Some(order_type) = &pagination.user_query.order {
-        queries.push(format!("order={}", order_type));
+        queries.push(format!("order={order_type}"));
     }
 
     format!("?{}", queries.join("&"))

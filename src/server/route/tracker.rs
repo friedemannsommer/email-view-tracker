@@ -73,7 +73,7 @@ pub async fn post_create_tracker(
     actix_web::HttpResponse::SeeOther()
         .insert_header((
             actix_web::http::header::LOCATION,
-            format!("/tracker/update/{}", tracker_id),
+            format!("/tracker/update/{tracker_id}"),
         ))
         .finish()
 }

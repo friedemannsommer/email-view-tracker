@@ -112,7 +112,7 @@ pub async fn start_http_service(
         }
         Err(err) => {
             log::error!("Couldn't bind to '{:?}'", &config.bind_address);
-            panic!("{:?}", err);
+            panic!("{err:?}");
         }
     }
     .run()
