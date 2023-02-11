@@ -1,4 +1,8 @@
-use sea_orm::entity::prelude::*;
+use sea_orm::{
+    prelude::TimeDateTimeWithTimeZone, ActiveModelBehavior, DeriveEntityModel, DerivePrimaryKey,
+    DeriveRelation, EntityTrait, EnumIter, PrimaryKeyTrait, Related, RelationDef, RelationTrait,
+};
+use uuid::Uuid;
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, serde::Deserialize, serde::Serialize)]
 #[sea_orm(table_name = "trackers")]
