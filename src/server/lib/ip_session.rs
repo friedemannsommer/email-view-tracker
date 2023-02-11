@@ -1,6 +1,6 @@
 #[derive(Debug, Clone)]
 pub struct IpSession {
-    ip_map: moka::dash::Cache<String, u8>,
+    ip_map: mini_moka::sync::Cache<String, u8>,
 }
 
 impl IpSession {
@@ -30,7 +30,7 @@ impl IpSession {
 impl Default for IpSession {
     fn default() -> Self {
         Self {
-            ip_map: moka::dash::CacheBuilder::new(10_000)
+            ip_map: mini_moka::sync::CacheBuilder::new(10_000)
                 .time_to_idle(std::time::Duration::from_secs(15 * 60))
                 .build(),
         }

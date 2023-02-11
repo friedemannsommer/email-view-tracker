@@ -59,10 +59,10 @@ version = "=0.4.1"
 default-features = false
 features = ["std", "password-hash", "parallel"]
 
-[dependencies.moka]
-version = "=0.9.6"
+[dependencies.mini-moka]
+version = "=0.10.0"
 default-features = false
-features = ["atomic64", "dash"]
+features = ["sync"]
 
 [dependencies.time]
 version = "=0.3.17"

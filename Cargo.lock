@@ -927,7 +927,7 @@ dependencies = [
  "log",
  "markup",
  "migration",
- "moka",
+ "mini-moka",
  "once_cell",
  "proc-macro2",
  "quote",
@@ -1563,6 +1563,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a60c7ce501c71e03a9c9c0d35b861413ae925bd979cc7a4e30d060069aaac8d"
 
 [[package]]
+name = "mini-moka"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5cafc5ec7807288595f9c20c86e6ce6d262b722f61e0547fe7e6e6e6451b58d5"
+dependencies = [
+ "crossbeam-channel",
+ "crossbeam-utils",
+ "dashmap",
+ "skeptic",
+ "smallvec",
+ "tagptr",
+ "triomphe",
+]
+
+[[package]]
 name = "minimal-lexical"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1587,26 +1602,6 @@ dependencies = [
  "log",
  "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys",
-]
-
-[[package]]
-name = "moka"
-version = "0.9.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b49a05f67020456541f4f29cbaa812016a266a86ec76f96d3873d459c68fe5e"
-dependencies = [
- "crossbeam-channel",
- "crossbeam-utils",
- "dashmap",
- "num_cpus",
- "once_cell",
- "parking_lot 0.12.1",
- "rustc_version",
- "scheduled-thread-pool",
- "skeptic",
- "smallvec",
- "tagptr",
- "triomphe",
 ]
 
 [[package]]
@@ -2382,15 +2377,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
 dependencies = [
  "winapi-util",
-]
-
-[[package]]
-name = "scheduled-thread-pool"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "977a7519bff143a44f842fd07e80ad1329295bd71686457f18e496736f4bf9bf"
-dependencies = [
- "parking_lot 0.12.1",
 ]
 
 [[package]]
