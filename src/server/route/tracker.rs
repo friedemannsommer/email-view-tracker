@@ -173,24 +173,22 @@ pub async fn get_track_impression(
     database: actix_web::web::Data<sea_orm::DatabaseConnection>,
     tracker_id: actix_web::web::Path<uuid::Uuid>,
 ) -> actix_web::HttpResponse {
-    let mut tracker = match get_tracker_unauthorized(&database, tracker_id.to_owned()).await {
-        Ok(val) => val,
+    match get_tracker_unauthorized(&database, tracker_id.to_owned()).await {
+        Ok(mut tracker) => {
+            tracker.views = if tracker.views.is_not_set() {
+                ActiveValue::Set(1)
+            } else {
+                ActiveValue::Set(tracker.views.unwrap() + 1)
+            };
+
+            if let Err(error) = tracker.update(database.as_ref()).await {
+                log::error!("{:?}", error);
+            }
+        }
         Err(error) => {
             log::error!("{:?}", error);
-            return server_error();
         }
     };
-
-    tracker.views = if tracker.views.is_not_set() {
-        ActiveValue::Set(1)
-    } else {
-        ActiveValue::Set(tracker.views.unwrap() + 1)
-    };
-
-    if let Err(error) = tracker.update(database.as_ref()).await {
-        log::error!("{:?}", error);
-        return server_error();
-    }
 
     actix_web::HttpResponse::Ok()
         .content_type("image/gif")
