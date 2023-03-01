@@ -1,6 +1,9 @@
 accepted = ["Apache-2.0", "ISC", "MIT", "MPL-2.0"]
 ignore-dev-dependencies = true
 private = { ignore = true }
+workarounds = [
+    "ring"
+]
 
 [ring]
 accepted = ["OpenSSL"]
