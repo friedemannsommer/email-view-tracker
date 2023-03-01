@@ -1,0 +1,53 @@
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/licensing.yml"
+      - "licensing/about.hbs"
+      - "licensing/about.toml"
+      - "Cargo.lock"
+      - "Cargo.toml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Rust latest stable
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install "cargo-about"
+        run: cargo install --locked cargo-about
+      - name: Create "docs" directory (if necessary)
+        run: |
+          if [[ ! -d docs ]]; then
+            mkdir docs
+          fi
+      - name: Generate third party license overview
+        run: cargo-about generate -o docs/licenses.html licensing/about.hbs -c licensing/about.toml
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'docs'
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1

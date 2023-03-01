@@ -25,3 +25,11 @@
 2. `email-view-tracker migrate run -d $DATABASE_URL`
 3. `email-view-tracker user create -d $DATABASE_URL -p $PASSWORD_SECRET -P $USER_PASSWORD -u $USERNAME`
 4. `email-view-tracker start -d $DATABASE_URL -l $BIND_ADDRESS -c $COOKIE_SECRET -p $PASSWORD_SECRET`
+
+## Open source licenses
+
+A list of licenses for the projects used in "Email view tracker" can be found
+here: [friedemannsommer.github.io/email-view-tracker/licenses.html](https://friedemannsommer.github.io/email-view-tracker/licenses.html).
+
+This product includes software developed by the OpenSSL Project for use in the OpenSSL
+Toolkit. ([www.openssl.org](https://www.openssl.org/))
