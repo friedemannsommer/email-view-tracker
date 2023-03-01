@@ -126,7 +126,10 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU Affero General Public License for more details:
-<https://www.gnu.org/licenses/agpl-3.0.txt>"#)
+<https://www.gnu.org/licenses/agpl-3.0.txt>
+
+A list of licenses for the projects used in "Email view tracker" can be found here:
+<https://friedemannsommer.github.io/email-view-tracker/licenses.html>"#)
         .subcommand(
             clap::Command::new(HTTP_START)
                 .about("Start HTTP server")
