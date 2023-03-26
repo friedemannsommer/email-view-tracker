@@ -20,7 +20,6 @@ fn main() {
     write_font_assets(&out_dir, &asset_dir);
     transform_stylesheets(&out_dir, &asset_dir);
 
-    println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed={}", asset_dir.to_str().unwrap());
 }
 
