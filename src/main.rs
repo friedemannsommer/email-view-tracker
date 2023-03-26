@@ -42,7 +42,7 @@ async fn main() {
         Some(model::cli::CliCommand::HttpServer(config)) => {
             init_logging(&config);
             log::debug!("{:?}", config);
-            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+            SALT.set(argon2::password_hash::SaltString::from_b64(&config.password_secret).unwrap())
                 .unwrap();
             start_http_service(config).await.unwrap()
         }
@@ -67,14 +67,14 @@ async fn main() {
         Some(model::cli::CliCommand::UserCreate(config)) => {
             init_logging(&config);
             log::debug!("{:?}", config);
-            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+            SALT.set(argon2::password_hash::SaltString::from_b64(&config.password_secret).unwrap())
                 .unwrap();
             log::info!("{:?}", create_user(config).await.unwrap());
         }
         Some(model::cli::CliCommand::UserChangePassword(config)) => {
             init_logging(&config);
             log::debug!("{:?}", config);
-            SALT.set(argon2::password_hash::SaltString::new(&config.password_secret).unwrap())
+            SALT.set(argon2::password_hash::SaltString::from_b64(&config.password_secret).unwrap())
                 .unwrap();
             log::info!("{:?}", change_user_password(config).await.unwrap())
         }

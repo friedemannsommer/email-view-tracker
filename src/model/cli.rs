@@ -95,7 +95,7 @@ fn get_command() -> clap::Command {
         .short('p')
         .long("password-secret")
         .env("PASSWORD_SECRET")
-        .help("Secret will be used as salt for password hashing. Must contain at least 16 bytes.")
+        .help("Base64 encoded secret which will be used as salt for password hashing. Must contain at least 16 bytes.")
         .required(true)
         .value_parser(StringWithLength(LengthComparison::GreaterOrEqual(16)));
     let username = clap::builder::Arg::new("username")

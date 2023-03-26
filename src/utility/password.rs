@@ -7,7 +7,7 @@ static ARGON2: once_cell::sync::Lazy<argon2::Argon2<'_>> =
 
 pub fn hash_password(password: &str) -> Result<String, argon2::password_hash::Error> {
     Ok(ARGON2
-        .hash_password(password.as_bytes(), &SALT.get().unwrap())?
+        .hash_password(password.as_bytes(), SALT.get().unwrap())?
         .to_string())
 }
 

@@ -9,12 +9,12 @@ name = "entity"
 path = "src/lib.rs"
 
 [dependencies.serde]
-version = "=1.0.156"
+version = "=1.0.158"
 default-features = false
 features = ["derive"]
 
 [dependencies.sea-orm]
-version = "=0.11.0"
+version = "=0.11.2"
 default-features = false
 features = ["macros", "with-time", "with-uuid"]
 
