@@ -2,6 +2,33 @@
 
 > Simple web UI to create tracking URLs for HTML Emails.
 
+<details>
+<summary>Screenshots</summary>
+
+### Login
+
+![Screenshot of the login page](screenshot/login.png)
+
+### Home
+
+![Screenshot of the home page on page 1](screenshot/home-page-1.png)
+![Screenshot of the home page on page 2](screenshot/home-page-2.png)
+
+### Tracker
+
+#### Create
+
+![Screenshot of the tracker creation page](screenshot/tracker-create.png)
+
+#### Edit
+
+![Screenshot of the tracker update page](screenshot/tracker-edit.png)
+
+### Profile
+
+![Screenshot of the profile update page](screenshot/profile-edit.png)
+</details>
+
 ## Requirements
 
 * Rust `>=1.65`
