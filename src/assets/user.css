@@ -61,3 +61,7 @@ nav.pagination > * {
 nav.pagination > *:last-child {
     margin: 0;
 }
+
+div.button-group > a.delete {
+    float: right;
+}

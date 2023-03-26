@@ -101,10 +101,15 @@ form div.input-group input:focus, form div.input-group input:focus-visible {
     outline: unset;
 }
 
-div.container {
+section.container {
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+.width-restricted {
+    max-width: calc(80 * 1em);
+    margin: 0 auto;
 }
 
 @font-face {

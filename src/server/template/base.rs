@@ -45,8 +45,8 @@ markup::define! {
     Button<'label>(label: &'label str, button_type: ButtonType, theme: ThemeColor) {
         button["type"={button_type}, class={theme}] { @label }
     }
-    ButtonLink<'url, 'label>(url: &'url str, label: &'label str, button_type: ButtonType, theme: ThemeColor) {
-        a[href={url}] {
+    ButtonLink<'url, 'label, 'class_name>(url: &'url str, label: &'label str, button_type: ButtonType, theme: ThemeColor, class_name: Option<&'class_name str>) {
+        a[href={url}, class={class_name}] {
             @Button{ button_type: *button_type, label, theme: *theme }
         }
     }
@@ -62,10 +62,11 @@ impl<'label> Default for Button<'label> {
     }
 }
 
-impl<'url, 'label> Default for ButtonLink<'url, 'label> {
+impl<'url, 'label, 'class_name> Default for ButtonLink<'url, 'label, 'class_name> {
     fn default() -> Self {
         Self {
             button_type: ButtonType::Button,
+            class_name: None,
             label: "",
             theme: ThemeColor::Dark,
             url: "",

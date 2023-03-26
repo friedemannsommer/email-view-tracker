@@ -9,7 +9,7 @@ pub fn template(user: &entity::user::ActiveModel) -> String {
     Layout {
         body: markup::new! {
             @Header { title: TITLE, user }
-            div.container {
+            section.container."width-restricted" {
                 form[method="POST"] {
                     div."input-group" {
                         label["for"="username"] { "Username" }

@@ -17,7 +17,7 @@ pub fn template(
     Layout {
         body: markup::new! {
             @Header { title: TITLE, user }
-            div.container {
+            section.container."width-restricted" {
                 form[method="POST"] {
                     div."input-group" {
                         label["for"="name"] { "Name" }
@@ -47,7 +47,13 @@ pub fn template(
                         @Button{ label: if has_tracker { "Update" } else { "Create" }, button_type: ButtonType::Submit, theme: ThemeColor::Primary }
                         @ButtonLink{ url: "/home", label: "Cancel", ..Default::default() }
                         @if has_tracker {
-                            @ButtonLink{ url: &format!("/tracker/delete/{}", tracker_id.as_deref().unwrap_or_default()), label: "Delete", theme: ThemeColor::Danger, ..Default::default() }
+                            @ButtonLink{
+                                url: &format!("/tracker/delete/{}", tracker_id.as_deref().unwrap_or_default()),
+                                label: "Delete",
+                                theme: ThemeColor::Danger,
+                                class_name: Some("delete"),
+                                ..Default::default()
+                            }
                         }
                     }
                 }

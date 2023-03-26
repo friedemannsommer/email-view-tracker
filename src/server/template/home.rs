@@ -19,7 +19,7 @@ pub fn template(
     Layout {
         body: markup::new! {
             @Header { title: TITLE, user }
-            section.trackers {
+            section."width-restricted" {
                 header {
                     h2 { "Trackers" }
                     @ButtonLink{ url: "/tracker/create", label: "Create tracker", theme: ThemeColor::Success, ..Default::default() }
