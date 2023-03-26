@@ -909,7 +909,7 @@ checksum = "7fcaabb2fef8c910e7f4c7ce9f67a1283a1715879a7c230ca9d6d1ae31f16d91"
 
 [[package]]
 name = "email-view-tracker"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "actix-identity",
  "actix-session",
