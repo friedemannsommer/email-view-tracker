@@ -14,13 +14,11 @@
 ![Screenshot of the home page on page 1](screenshot/home-page-1.png)
 ![Screenshot of the home page on page 2](screenshot/home-page-2.png)
 
-### Tracker
-
-#### Create
+### Tracker creation
 
 ![Screenshot of the tracker creation page](screenshot/tracker-create.png)
 
-#### Edit
+### Tracker update
 
 ![Screenshot of the tracker update page](screenshot/tracker-edit.png)
 
