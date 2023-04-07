@@ -20,7 +20,7 @@ members = [
 actix-identity = "=0.5.2"
 entity = { path = "entity" }
 fern = "=0.6.2"
-getrandom = "=0.2.8"
+getrandom = "=0.2.9"
 hex = "=0.4.3"
 log = "=0.4.17"
 markup = "=0.13.1"
