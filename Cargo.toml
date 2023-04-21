@@ -70,7 +70,7 @@ default-features = false
 features = ["std", "macros"]
 
 [build-dependencies]
-lightningcss = "=1.0.0-alpha.40"
+lightningcss = "=1.0.0-alpha.41"
 proc-macro2 = "=1.0.56"
 quote = "=1.0.26"
 time = "=0.3.20"
