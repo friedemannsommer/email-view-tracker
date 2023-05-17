@@ -45,7 +45,7 @@ default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
 [dependencies.uuid]
-version = "=1.3.2"
+version = "=1.3.3"
 default-features = false
 features = ["v4"]
 
@@ -71,6 +71,6 @@ features = ["std", "macros"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.41"
-proc-macro2 = "=1.0.56"
+proc-macro2 = "=1.0.58"
 quote = "=1.0.27"
 time = "=0.3.21"
