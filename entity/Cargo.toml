@@ -19,7 +19,7 @@ default-features = false
 features = ["macros", "with-time", "with-uuid"]
 
 [dependencies.uuid]
-version = "=1.3.3"
+version = "=1.3.4"
 default-features = false
 features = ["v4", "serde"]
 
