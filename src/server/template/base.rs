@@ -21,8 +21,10 @@ markup::define! {
         body: Body
     ) {
         @markup::doctype()
-        html {
+        html["lang" = "en"] {
             head {
+                meta["charset" = "UTF-8"];
+                meta["name" = "viewport", "content" = "width=device-width, initial-scale=1, user-scalable=1"];
                 title { @title }
                 @header
             }
