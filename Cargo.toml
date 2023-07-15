@@ -65,7 +65,7 @@ default-features = false
 features = ["sync"]
 
 [dependencies.time]
-version = "=0.3.22"
+version = "=0.3.23"
 default-features = false
 features = ["std", "macros"]
 
@@ -73,4 +73,4 @@ features = ["std", "macros"]
 lightningcss = "=1.0.0-alpha.44"
 proc-macro2 = "=1.0.63"
 quote = "=1.0.29"
-time = "=0.3.22"
+time = "=0.3.23"
