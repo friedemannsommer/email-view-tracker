@@ -26,8 +26,8 @@ log = "=0.4.19"
 markup = "=0.13.1"
 migration = { path = "migration" }
 once_cell = "=1.18.0"
-serde = "=1.0.171"
-thiserror = "=1.0.43"
+serde = "=1.0.174"
+thiserror = "=1.0.44"
 url = "=2.4.0"
 
 [dependencies.actix-web]
@@ -40,12 +40,12 @@ version = "=0.7.2"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.3.11"
+version = "=4.3.17"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
 [dependencies.uuid]
-version = "=1.4.0"
+version = "=1.4.1"
 default-features = false
 features = ["v4"]
 
@@ -71,6 +71,6 @@ features = ["std", "macros"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.44"
-proc-macro2 = "=1.0.65"
-quote = "=1.0.29"
+proc-macro2 = "=1.0.66"
+quote = "=1.0.31"
 time = "=0.3.23"
