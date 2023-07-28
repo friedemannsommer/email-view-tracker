@@ -72,5 +72,5 @@ features = ["std", "macros"]
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.44"
 proc-macro2 = "=1.0.66"
-quote = "=1.0.31"
+quote = "=1.0.32"
 time = "=0.3.23"
