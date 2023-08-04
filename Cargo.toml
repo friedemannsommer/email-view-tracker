@@ -26,9 +26,9 @@ log = "=0.4.19"
 markup = "=0.13.1"
 migration = { path = "migration" }
 once_cell = "=1.18.0"
-serde = "=1.0.177"
+serde = "=1.0.181"
 thiserror = "=1.0.44"
-time = "=0.3.23"
+time = "=0.3.25"
 url = "=2.4.0"
 
 [dependencies.actix-web]
@@ -51,7 +51,7 @@ default-features = false
 features = ["v4"]
 
 [dependencies.sea-orm]
-version = "=0.12.1"
+version = "=0.12.2"
 default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 
@@ -69,4 +69,4 @@ features = ["sync"]
 lightningcss = "=1.0.0-alpha.44"
 proc-macro2 = "=1.0.66"
 quote = "=1.0.32"
-time = { version = "=0.3.23", features = ["macros", "formatting"] }
+time = { version = "=0.3.25", features = ["macros", "formatting"] }
