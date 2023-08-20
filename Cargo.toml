@@ -61,7 +61,7 @@ default-features = false
 features = ["std", "password-hash"]
 
 [dependencies.mini-moka]
-version = "=0.10.1"
+version = "=0.10.2"
 default-features = false
 features = ["sync"]
 
