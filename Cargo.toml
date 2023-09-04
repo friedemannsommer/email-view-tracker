@@ -28,7 +28,7 @@ migration = { path = "migration" }
 once_cell = "=1.18.0"
 serde = "=1.0.188"
 thiserror = "=1.0.47"
-time = "=0.3.27"
+time = "=0.3.28"
 url = "=2.4.1"
 
 [dependencies.actix-web]
@@ -69,4 +69,4 @@ features = ["sync"]
 lightningcss = "=1.0.0-alpha.45"
 proc-macro2 = "=1.0.66"
 quote = "=1.0.33"
-time = { version = "=0.3.27", features = ["macros", "formatting"] }
+time = { version = "=0.3.28", features = ["macros", "formatting"] }
