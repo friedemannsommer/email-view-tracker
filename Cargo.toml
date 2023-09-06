@@ -27,7 +27,7 @@ markup = "=0.13.1"
 migration = { path = "migration" }
 once_cell = "=1.18.0"
 serde = "=1.0.188"
-thiserror = "=1.0.47"
+thiserror = "=1.0.48"
 time = "=0.3.28"
 url = "=2.4.1"
 
@@ -56,7 +56,7 @@ default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 
 [dependencies.argon2]
-version = "=0.5.1"
+version = "=0.5.2"
 default-features = false
 features = ["std", "password-hash"]
 
