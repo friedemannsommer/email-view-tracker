@@ -41,7 +41,7 @@ version = "=0.8.0"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.4.3"
+version = "=4.4.4"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
@@ -51,7 +51,7 @@ default-features = false
 features = ["v4"]
 
 [dependencies.sea-orm]
-version = "=0.12.2"
+version = "=0.12.3"
 default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 

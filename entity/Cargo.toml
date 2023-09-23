@@ -14,7 +14,7 @@ default-features = false
 features = ["derive"]
 
 [dependencies.sea-orm]
-version = "=0.12.2"
+version = "=0.12.3"
 default-features = false
 features = ["macros", "with-time", "with-uuid"]
 
