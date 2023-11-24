@@ -23,7 +23,7 @@ fern = "=0.6.2"
 getrandom = "=0.2.11"
 hex = "=0.4.3"
 log = "=0.4.20"
-markup = "=0.13.1"
+markup = "=0.15.0"
 migration = { path = "migration" }
 once_cell = "=1.18.0"
 serde = "=1.0.192"
