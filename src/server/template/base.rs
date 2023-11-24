@@ -107,3 +107,7 @@ impl markup::Render for ButtonType {
         }
     }
 }
+
+impl markup::RenderAttributeValue for ButtonType {}
+
+impl markup::RenderAttributeValue for ThemeColor {}
