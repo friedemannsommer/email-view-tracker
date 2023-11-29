@@ -41,7 +41,7 @@ version = "=0.8.0"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.4.8"
+version = "=4.4.10"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
@@ -67,6 +67,6 @@ features = ["sync"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.51"
-proc-macro2 = "=1.0.69"
+proc-macro2 = "=1.0.70"
 quote = "=1.0.33"
 time = { version = "=0.3.30", features = ["macros", "formatting"] }
