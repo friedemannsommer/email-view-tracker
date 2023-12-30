@@ -27,12 +27,12 @@ markup = { git = "https://github.com/utkarshkukreti/markup.rs", rev = "c1dc693e0
 migration = { path = "migration" }
 once_cell = "=1.19.0"
 serde = "=1.0.193"
-thiserror = "=1.0.51"
-time = "=0.3.30"
+thiserror = "=1.0.52"
+time = "=0.3.31"
 url = "=2.5.0"
 
 [dependencies.actix-web]
-version = "=4.4.0"
+version = "=4.4.1"
 default-features = false
 features = ["compress-brotli", "compress-gzip", "compress-zstd", "macros"]
 
@@ -41,7 +41,7 @@ version = "=0.8.0"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.4.11"
+version = "=4.4.12"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
@@ -67,6 +67,6 @@ features = ["sync"]
 
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.51"
-proc-macro2 = "=1.0.70"
+proc-macro2 = "=1.0.71"
 quote = "=1.0.33"
-time = { version = "=0.3.30", features = ["macros", "formatting"] }
+time = { version = "=0.3.31", features = ["macros", "formatting"] }
