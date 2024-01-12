@@ -17,7 +17,7 @@ members = [
 ]
 
 [dependencies]
-actix-identity = "=0.6.0"
+actix-identity = "=0.7.0"
 entity = { path = "entity" }
 fern = "=0.6.2"
 getrandom = "=0.2.11"

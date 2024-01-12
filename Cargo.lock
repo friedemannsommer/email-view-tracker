@@ -59,12 +59,12 @@ dependencies = [
 
 [[package]]
 name = "actix-identity"
-version = "0.6.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "36e1cc6f95e245b2f3c6995df4e1c0c697704c48c28ec325d135a3ca039d4952"
+checksum = "1478456bca71c7b04411da1afb0c506e16dec6863815207693b791247511027f"
 dependencies = [
  "actix-service",
- "actix-session",
+ "actix-session 0.9.0",
  "actix-utils",
  "actix-web",
  "derive_more",
@@ -145,6 +145,22 @@ dependencies = [
  "actix-web",
  "anyhow",
  "async-trait",
+ "derive_more",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "actix-session"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b671404ec72194d8af58c2bdaf51e3c477a0595056bd5010148405870dda8df2"
+dependencies = [
+ "actix-service",
+ "actix-utils",
+ "actix-web",
+ "anyhow",
  "derive_more",
  "serde",
  "serde_json",
@@ -1013,7 +1029,7 @@ name = "email-view-tracker"
 version = "0.1.14"
 dependencies = [
  "actix-identity",
- "actix-session",
+ "actix-session 0.8.0",
  "actix-web",
  "argon2",
  "clap",
