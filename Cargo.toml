@@ -20,7 +20,7 @@ members = [
 actix-identity = "=0.6.0"
 entity = { path = "entity" }
 fern = "=0.6.2"
-getrandom = "=0.2.11"
+getrandom = "=0.2.12"
 hex = "=0.4.3"
 log = "=0.4.20"
 markup = { git = "https://github.com/utkarshkukreti/markup.rs", rev = "c1dc693e0d3e312d52160c312961bf47f1cffbf7" }
