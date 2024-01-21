@@ -14,12 +14,12 @@ default-features = false
 features = ["derive"]
 
 [dependencies.sea-orm]
-version = "=0.12.10"
+version = "=0.12.11"
 default-features = false
 features = ["macros", "with-time", "with-uuid"]
 
 [dependencies.uuid]
-version = "=1.6.1"
+version = "=1.7.0"
 default-features = false
 features = ["v4", "serde"]
 

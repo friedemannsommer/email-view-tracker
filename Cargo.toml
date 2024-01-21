@@ -41,22 +41,22 @@ version = "=0.9.0"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.4.16"
+version = "=4.4.18"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
 [dependencies.uuid]
-version = "=1.6.1"
+version = "=1.7.0"
 default-features = false
 features = ["v4"]
 
 [dependencies.sea-orm]
-version = "=0.12.10"
+version = "=0.12.11"
 default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 
 [dependencies.argon2]
-version = "=0.5.2"
+version = "=0.5.3"
 default-features = false
 features = ["std", "password-hash"]
 
@@ -66,7 +66,7 @@ default-features = false
 features = ["sync"]
 
 [build-dependencies]
-lightningcss = "=1.0.0-alpha.51"
-proc-macro2 = "=1.0.76"
+lightningcss = "=1.0.0-alpha.52"
+proc-macro2 = "=1.0.78"
 quote = "=1.0.35"
 time = { version = "=0.3.31", features = ["macros", "formatting"] }
