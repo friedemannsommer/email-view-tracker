@@ -51,7 +51,7 @@ default-features = false
 features = ["v4"]
 
 [dependencies.sea-orm]
-version = "=0.12.12"
+version = "=0.12.14"
 default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 
