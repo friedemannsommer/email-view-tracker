@@ -12,5 +12,5 @@ ARG GID=1000
 RUN addgroup --gid "${GID}" evt \
   && adduser --uid "${UID}" --ingroup evt --shell /sbin/nologin --disabled-password --no-create-home evt
 USER evt
-COPY --from=build --chown=evt /usr/local/bin/evt /usr/local/bin/evt
-CMD [ "/usr/local/bin/evt" ]
+COPY --from=build --chown=evt /usr/local/bin/email-view-tracker /usr/local/bin/email-view-tracker
+CMD [ "/usr/local/bin/email-view-tracker" ]
