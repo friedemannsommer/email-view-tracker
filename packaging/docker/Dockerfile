@@ -13,4 +13,4 @@ RUN addgroup --gid "${GID}" evt \
   && adduser --uid "${UID}" --ingroup evt --shell /sbin/nologin --disabled-password --no-create-home evt
 USER evt
 COPY --from=build --chown=evt /usr/local/bin/email-view-tracker /usr/local/bin/email-view-tracker
-CMD [ "/usr/local/bin/email-view-tracker" ]
+ENTRYPOINT [ "/usr/local/bin/email-view-tracker" ]
