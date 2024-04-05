@@ -44,7 +44,7 @@ jobs:
       - name: Generate third party license overview
         run: cargo-about generate -o docs/licenses.html licensing/about.hbs -c licensing/about.toml
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
