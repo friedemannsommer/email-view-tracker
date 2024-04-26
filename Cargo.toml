@@ -27,7 +27,7 @@ markup = { git = "https://github.com/utkarshkukreti/markup.rs", rev = "c1dc693e0
 migration = { path = "migration" }
 once_cell = "=1.19.0"
 serde = "=1.0.198"
-thiserror = "=1.0.58"
+thiserror = "=1.0.59"
 time = "=0.3.36"
 url = "=2.5.0"
 
