@@ -9,7 +9,7 @@ name = "entity"
 path = "src/lib.rs"
 
 [dependencies.serde]
-version = "=1.0.200"
+version = "=1.0.201"
 default-features = false
 features = ["derive"]
 
