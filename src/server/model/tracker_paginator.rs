@@ -8,7 +8,6 @@ pub struct TrackersQuery {
 #[derive(Debug)]
 pub struct TrackerPagination<'user_query> {
     pub entries: Vec<entity::tracker::Model>,
-    pub number_of_items: u64,
     pub number_of_pages: u64,
     pub page: u64,
     pub user_query: &'user_query TrackersQuery,

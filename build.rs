@@ -34,13 +34,11 @@ fn generate_last_modified(datetime: time::OffsetDateTime) -> proc_macro2::TokenS
 
 fn generate_build_asset_file(path: &Path, contents: String) -> String {
     let metadata = path.metadata().unwrap();
-    let file_name = path.file_name().unwrap().to_str().unwrap();
     let file_contents = contents.as_bytes();
     let last_modified =
         generate_last_modified(time::OffsetDateTime::from(metadata.modified().unwrap()));
 
     quote::quote!(crate::model::asset::Asset {
-        name: #file_name,
         contents: &[#(#file_contents),*],
         last_modified: #last_modified
     })
@@ -50,13 +48,11 @@ fn generate_build_asset_file(path: &Path, contents: String) -> String {
 fn generate_static_asset_file(path: &Path) -> String {
     let absolute_path = fs::canonicalize(path).unwrap();
     let absolute_path_str = absolute_path.to_str().unwrap();
-    let file_name = path.file_name().unwrap().to_str().unwrap();
     let metadata = path.metadata().unwrap();
     let last_modified =
         generate_last_modified(time::OffsetDateTime::from(metadata.modified().unwrap()));
 
     quote::quote!(crate::model::asset::Asset {
-        name: #file_name,
         contents: include_bytes!(#absolute_path_str),
         last_modified: #last_modified
     })

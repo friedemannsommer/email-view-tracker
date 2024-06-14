@@ -77,7 +77,6 @@ async fn fetch_paginated_trackers<'user_query>(
         } else {
             Vec::with_capacity(0)
         },
-        number_of_items: pagination.number_of_items,
         number_of_pages: pagination.number_of_pages,
         page,
         user_query,
