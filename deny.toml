@@ -20,8 +20,14 @@ allow = [
 # [between 0.0 and 1.0].
 confidence-threshold = 0.8
 exceptions = [
-    { name = "encoding_rs", allow = ["BSD-3-Clause"] },
-    { name = "ring", allow = ["LicenseRef-ring"] },
+    { allow = ["BSD-3-Clause"], crate = "encoding_rs" },
+    { allow = ["LicenseRef-ring"], crate = "ring" },
+    { allow = ["Unicode-DFS-2016"], crate = "unicode-ident" },
+    { allow = ["BSD-3-Clause"], crate = "alloc-no-stdlib" },
+    { allow = ["BSD-3-Clause"], crate = "alloc-stdlib" },
+    { allow = ["ISC"], crate = "rustls-webpki" },
+    { allow = ["BSD-3-Clause"], crate = "subtle" },
+    { allow = ["ISC"], crate = "untrusted" }
 ]
 
 [[licenses.clarify]]
