@@ -37,7 +37,7 @@ default-features = false
 features = ["compress-brotli", "compress-gzip", "compress-zstd", "macros"]
 
 [dependencies.actix-session]
-version = "=0.10.0"
+version = "=0.10.1"
 features = ["cookie-session"]
 
 [dependencies.clap]
