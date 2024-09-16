@@ -35,7 +35,7 @@ dependencies = [
  "brotli",
  "bytes",
  "bytestring",
- "derive_more",
+ "derive_more 0.99.18",
  "encoding_rs",
  "flate2",
  "futures-core",
@@ -59,15 +59,15 @@ dependencies = [
 
 [[package]]
 name = "actix-identity"
-version = "0.7.1"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2c99b7a5614b72a78f04aa2021e5370fc1aef2475fffeffc0c1266b99007062"
+checksum = "23b8ddc6f6a8b19c4016aaa13519968da9969bc3bc1c1c883cdb0f25dd6c8cf7"
 dependencies = [
  "actix-service",
- "actix-session 0.9.0",
+ "actix-session",
  "actix-utils",
  "actix-web",
- "derive_more",
+ "derive_more 1.0.0",
  "futures-core",
  "serde",
  "tracing",
@@ -137,22 +137,6 @@ dependencies = [
 
 [[package]]
 name = "actix-session"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b671404ec72194d8af58c2bdaf51e3c477a0595056bd5010148405870dda8df2"
-dependencies = [
- "actix-service",
- "actix-utils",
- "actix-web",
- "anyhow",
- "derive_more",
- "serde",
- "serde_json",
- "tracing",
-]
-
-[[package]]
-name = "actix-session"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac013ca53d36acb0cc60f5437381c97c291f51a12a5bd8d02febc3a3aaf53390"
@@ -161,7 +145,7 @@ dependencies = [
  "actix-utils",
  "actix-web",
  "anyhow",
- "derive_more",
+ "derive_more 0.99.18",
  "serde",
  "serde_json",
  "tracing",
@@ -197,7 +181,7 @@ dependencies = [
  "bytestring",
  "cfg-if",
  "cookie",
- "derive_more",
+ "derive_more 0.99.18",
  "encoding_rs",
  "futures-core",
  "futures-util",
@@ -971,6 +955,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "derive_more"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4a9b99b9cbbe49445b21764dc0625032a89b145a2642e67603e1c936f5458d05"
+dependencies = [
+ "derive_more-impl",
+]
+
+[[package]]
+name = "derive_more-impl"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cb7330aeadfbe296029522e6c40f315320aba36fc43a5b3632f3795348f3bd22"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.72",
+ "unicode-xid",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1029,7 +1034,7 @@ name = "email-view-tracker"
 version = "0.1.18"
 dependencies = [
  "actix-identity",
- "actix-session 0.10.0",
+ "actix-session",
  "actix-web",
  "argon2",
  "clap",
@@ -3286,6 +3291,12 @@ name = "unicode-segmentation"
 version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d4c87d22b6e3f4a18d4d40ef354e97c90fcb14dd91d7dc0aa9d8a1172ebf7202"
+
+[[package]]
+name = "unicode-xid"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "229730647fbc343e3a80e463c1db7f78f3855d3f3739bee0dda773c9a037c90a"
 
 [[package]]
 name = "unicode_categories"
