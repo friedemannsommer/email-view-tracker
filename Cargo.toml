@@ -19,7 +19,7 @@ members = [
 [dependencies]
 actix-identity = "=0.8.0"
 entity = { path = "entity" }
-fern = "=0.6.2"
+fern = "=0.7.0"
 getrandom = "=0.2.15"
 hex = "=0.4.3"
 log = "=0.4.22"
