@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM debian:12.5-slim as build
+FROM --platform=$BUILDPLATFORM debian:12.7-slim as build
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 COPY ./copy-binary.sh /opt/evt/scripts/copy-binary.sh
@@ -6,7 +6,7 @@ COPY ./artifact-binaries /opt/evt/binaries
 RUN chmod ug+x /opt/evt/scripts/copy-binary.sh
 RUN /opt/evt/scripts/copy-binary.sh
 
-FROM alpine:3.19.1
+FROM alpine:3.20.3
 ARG UID=1000
 ARG GID=1000
 RUN addgroup --gid "${GID}" evt \
