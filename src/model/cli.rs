@@ -267,11 +267,16 @@ impl clap::builder::TypedValueParser for SocketListenerParser {
         }
 
         #[cfg(unix)]
-        if let Ok(socket_path) = std::path::PathBuf::from_str(input) {
-            return Ok(SocketListener::Unix(socket_path));
+        {
+            let Ok(socket_path) = std::path::PathBuf::from_str(input);
+
+            Ok(SocketListener::Unix(socket_path))
         }
 
-        Err(clap::error::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd))
+        #[cfg(not(unix))]
+        {
+            Err(clap::error::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd))
+        }
     }
 }
 
