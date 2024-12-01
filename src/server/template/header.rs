@@ -1,7 +1,9 @@
+#![allow(clippy::needless_lifetimes)] // the templates require a lifetime by the generator macro
+
 markup::define! {
-    Header<'title, 'user>(
-        title: &'title str,
-        user: &'user entity::user::ActiveModel
+    Header<'a>(
+        title: &'a str,
+        user: &'a entity::user::ActiveModel
     ) {
         header {
             h1 { @title }

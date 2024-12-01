@@ -1,3 +1,5 @@
+#![allow(clippy::needless_lifetimes)] // the templates require a lifetime by the generator macro
+
 use std::fmt::Write;
 
 #[derive(Debug, Copy, Clone)]
@@ -15,8 +17,8 @@ pub enum ButtonType {
 }
 
 markup::define! {
-    Layout<'title, Header: markup::Render, Body:markup::Render>(
-        title: &'title str,
+    Layout<'a, Header: markup::Render, Body:markup::Render>(
+        title: &'a str,
         header: Header,
         body: Body
     ) {
@@ -41,13 +43,13 @@ markup::define! {
     Stylesheet<'path>(path: &'path str) {
         link[rel="stylesheet", href={path}, fetchpriority="high"];
     }
-    PrefetchSource<'path, 'source_type>(path: &'path str, source_type: &'source_type str) {
+    PrefetchSource<'a>(path: &'a str, source_type: &'a str) {
         link[href={path}, "as"={source_type}, rel="preload", crossorigin="anonymous"];
     }
     Button<'label>(label: &'label str, button_type: ButtonType, theme: ThemeColor) {
         button["type"={button_type}, class={theme}] { @label }
     }
-    ButtonLink<'url, 'label, 'class_name>(url: &'url str, label: &'label str, button_type: ButtonType, theme: ThemeColor, class_name: Option<&'class_name str>) {
+    ButtonLink<'a>(url: &'a str, label: &'a str, button_type: ButtonType, theme: ThemeColor, class_name: Option<&'a str>) {
         a[href={url}, class={class_name}] {
             @Button{ button_type: *button_type, label, theme: *theme }
         }
@@ -64,7 +66,7 @@ impl<'label> Default for Button<'label> {
     }
 }
 
-impl<'url, 'label, 'class_name> Default for ButtonLink<'url, 'label, 'class_name> {
+impl<'a> Default for ButtonLink<'a> {
     fn default() -> Self {
         Self {
             button_type: ButtonType::Button,
