@@ -24,6 +24,6 @@ default-features = false
 features = ["v4", "serde"]
 
 [dependencies.time]
-version = "=0.3.36"
+version = "=0.3.37"
 default-features = false
 features = ["std", "serde"]
