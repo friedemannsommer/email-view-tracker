@@ -68,5 +68,5 @@ features = ["sync"]
 [build-dependencies]
 lightningcss = "=1.0.0-alpha.61"
 proc-macro2 = "=1.0.92"
-quote = "=1.0.37"
+quote = "=1.0.38"
 time = { version = "=0.3.37", features = ["macros", "formatting"] }
