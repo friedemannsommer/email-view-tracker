@@ -34,6 +34,9 @@ accepted = ["BSD-3-Clause"]
 [unicode-ident]
 accepted = ["Unicode-DFS-2016"]
 
+[foldhash]
+accepted = ["Zlib"]
+
 [webpki.clarify]
 license = "ISC"
 
