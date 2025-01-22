@@ -33,7 +33,9 @@ exceptions = [
     { allow = ["BSD-3-Clause"], crate = "encoding_rs" },
     { allow = ["BSD-3-Clause"], crate = "instant" },
     { allow = ["BSD-3-Clause"], crate = "subtle" },
-    { allow = ["OpenSSL"], crate = "ring" },
+    { allow = ["ISC", "OpenSSL"], crate = "ring" },
+    { allow = ["ISC"], crate = "rustls-webpki" },
+    { allow = ["ISC"], crate = "untrusted" },
     { allow = ["Zlib"], crate = "foldhash" },
 ]
 
