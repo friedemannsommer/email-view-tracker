@@ -1,61 +1,46 @@
-[graph]
-targets = [
-    "aarch64-unknown-linux-musl",
-    "arm-unknown-linux-musleabihf",
-    "armv7-unknown-linux-musleabihf",
-    "x86_64-unknown-linux-musl",
-    "i686-unknown-linux-musl",
-    "x86_64-pc-windows-gnu",
-]
-all-features = true
+accepted = ["Apache-2.0", "ISC", "MIT", "MPL-2.0", "Unicode-3.0"]
+ignore-dev-dependencies = true
+private = { ignore = true }
 
+[ring]
+accepted = ["OpenSSL"]
 
-[advisories]
-version = 2
-ignore = ["RUSTSEC-2023-0071"]
+[ring.clarify]
+license = "ISC AND MIT AND OpenSSL"
 
-[bans]
-multiple-versions = "allow"
-wildcards = 'deny'
+[[ring.clarify.files]]
+path = 'LICENSE'
+license = 'OpenSSL'
+checksum = '76b39f9b371688eac9d8323f96ee80b3aef5ecbc2217f25377bd4e4a615296a9'
 
-[sources]
-unknown-registry = "deny"
-unknown-git = "deny"
-allow-git = [
-    "https://github.com/utkarshkukreti/markup.rs",
-]
+[alloc-stdlib]
+accepted = ["BSD-3-Clause"]
 
-[licenses]
-confidence-threshold = 0.9
-allow = [
-    "Apache-2.0",
-    "MIT",
-    "MPL-2.0",
-    "ISC",
-    "Unicode-3.0",
-]
-exceptions = [
-    { allow = ["BSD-3-Clause"], crate = "Inflector" },
-    { allow = ["BSD-3-Clause"], crate = "alloc-no-stdlib" },
-    { allow = ["BSD-3-Clause"], crate = "alloc-stdlib" },
-    { allow = ["BSD-3-Clause"], crate = "encoding_rs" },
-    { allow = ["BSD-3-Clause"], crate = "instant" },
-    { allow = ["BSD-3-Clause"], crate = "subtle" },
-    { allow = ["OpenSSL"], crate = "ring" },
-    { allow = ["Zlib"], crate = "foldhash" },
-]
+[alloc-no-stdlib]
+accepted = ["BSD-3-Clause"]
 
-[[licenses.clarify]]
-crate = "ring"
-expression = "ISC AND MIT AND OpenSSL"
-license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
+[encoding_rs]
+accepted = ["BSD-3-Clause"]
 
-[[licenses.clarify]]
-crate = "webpki"
-expression = "ISC"
-license-files = [{ path = "LICENSE", hash = 0x001c7e6c }]
+[Inflector]
+accepted = ["BSD-2-Clause"]
 
-[[licenses.clarify]]
-crate = "rustls-webpki"
-expression = "ISC"
-license-files = [{ path = "LICENSE", hash = 0x001c7e6c }]
+[instant]
+accepted = ["BSD-3-Clause"]
+
+[subtle]
+accepted = ["BSD-3-Clause"]
+
+[unicode-ident]
+accepted = ["Unicode-DFS-2016"]
+
+[foldhash]
+accepted = ["Zlib"]
+
+[webpki.clarify]
+license = "ISC"
+
+[[webpki.clarify.files]]
+path = 'LICENSE'
+license = 'ISC'
+checksum = '5b698ca13897be3afdb7174256fa1574f8c6892b8bea1a66dd6469d3fe27885a'
