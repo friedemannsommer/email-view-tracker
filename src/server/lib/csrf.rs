@@ -1,13 +1,7 @@
-#[derive(thiserror::Error, Debug)]
-pub enum CsrfError {
-    #[error(transparent)]
-    Random(#[from] getrandom::Error),
-}
-
-pub fn generate_token() -> Result<String, CsrfError> {
+pub fn generate_token() -> Result<String, getrandom::Error> {
     let mut buffer = [0u8; 32];
 
-    getrandom::getrandom(&mut buffer)?;
+    getrandom::fill(&mut buffer)?;
 
     Ok(hex::encode(buffer))
 }
