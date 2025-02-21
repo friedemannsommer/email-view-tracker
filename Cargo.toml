@@ -46,7 +46,7 @@ default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
 [dependencies.uuid]
-version = "=1.12.1"
+version = "=1.14.0"
 default-features = false
 features = ["v4"]
 
