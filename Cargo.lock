@@ -1064,7 +1064,7 @@ dependencies = [
 
 [[package]]
 name = "email-view-tracker"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "actix-identity",
  "actix-session",

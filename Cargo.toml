@@ -1,6 +1,6 @@
 [package]
 name = "email-view-tracker"
-version = "0.1.21"
+version = "0.1.22"
 edition = "2024"
 license = "AGPL-3.0"
 publish = false
