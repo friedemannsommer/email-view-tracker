@@ -2,7 +2,7 @@ use actix_session::config::CookieContentSecurity;
 use actix_web::cookie::SameSite;
 
 use crate::{
-    database::connection::{get_database_connection, ConnectError},
+    database::connection::{ConnectError, get_database_connection},
     model::cli::SocketListener,
     server::lib::header::get_default_headers_middleware,
 };

@@ -1,7 +1,7 @@
 use actix_web::HttpMessage;
 
 use crate::{
-    database::access::{get_user_by_name, AccessError},
+    database::access::{AccessError, get_user_by_name},
     server::{lib::ip_session::IpSession, template::login},
     utility::password::verify_password,
 };

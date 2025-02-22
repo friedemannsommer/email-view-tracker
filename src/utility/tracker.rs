@@ -3,8 +3,8 @@ use std::str::FromStr;
 use sea_orm::ActiveValue;
 
 use crate::database::{
-    access::{add_tracker, get_tracker, AccessError},
     DatabaseError,
+    access::{AccessError, add_tracker, get_tracker},
 };
 
 #[derive(thiserror::Error, Debug)]

@@ -1,6 +1,7 @@
 use sea_orm::{
-    prelude::TimeDateTimeWithTimeZone, ActiveModelBehavior, DeriveEntityModel, DerivePrimaryKey,
-    DeriveRelation, EntityTrait, EnumIter, PrimaryKeyTrait, Related, RelationDef, RelationTrait,
+    ActiveModelBehavior, DeriveEntityModel, DerivePrimaryKey, DeriveRelation, EntityTrait,
+    EnumIter, PrimaryKeyTrait, Related, RelationDef, RelationTrait,
+    prelude::TimeDateTimeWithTimeZone,
 };
 use uuid::Uuid;
 

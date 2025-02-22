@@ -4,9 +4,9 @@ use sea_orm::{ActiveModelTrait, ActiveValue};
 
 use crate::{
     database::{
-        access::{add_user, get_user, get_user_by_name, AccessError},
-        connection::{get_database_connection, ConnectError},
         DatabaseError,
+        access::{AccessError, add_user, get_user, get_user_by_name},
+        connection::{ConnectError, get_database_connection},
     },
     model::config::UserConfig,
     utility::password::hash_password,

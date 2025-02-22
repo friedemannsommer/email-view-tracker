@@ -43,25 +43,25 @@ pub fn process_cli() -> Option<CliCommand> {
 
     match matches.subcommand() {
         Some((HTTP_START, sub_matches)) => {
-            return Some(CliCommand::HttpServer(parse_server_config(sub_matches)))
+            return Some(CliCommand::HttpServer(parse_server_config(sub_matches)));
         }
         Some((MIGRATE, migrate_matches)) => match migrate_matches.subcommand() {
             Some((MIGRATE_CHECK, sub_matches)) => {
-                return Some(CliCommand::MigrateCheck(parse_migrate_config(sub_matches)))
+                return Some(CliCommand::MigrateCheck(parse_migrate_config(sub_matches)));
             }
             Some((MIGRATE_RUN, sub_matches)) => {
-                return Some(CliCommand::MigrateRun(parse_migrate_config(sub_matches)))
+                return Some(CliCommand::MigrateRun(parse_migrate_config(sub_matches)));
             }
             _ => {}
         },
         Some((USER, user_matches)) => match user_matches.subcommand() {
             Some((USER_CREATE, sub_matches)) => {
-                return Some(CliCommand::UserCreate(parse_user_config(sub_matches)))
+                return Some(CliCommand::UserCreate(parse_user_config(sub_matches)));
             }
             Some((USER_CHANGE_PASSWORD, sub_matches)) => {
                 return Some(CliCommand::UserChangePassword(parse_user_config(
                     sub_matches,
-                )))
+                )));
             }
             _ => {}
         },
@@ -258,7 +258,7 @@ impl clap::builder::TypedValueParser for SocketListenerParser {
                 return Err(clap::error::Error::new(
                     clap::error::ErrorKind::MissingRequiredArgument,
                 )
-                .with_cmd(cmd))
+                .with_cmd(cmd));
             }
         };
 
@@ -295,7 +295,7 @@ impl clap::builder::TypedValueParser for StringWithLength {
                 return Err(clap::error::Error::new(
                     clap::error::ErrorKind::MissingRequiredArgument,
                 )
-                .with_cmd(cmd))
+                .with_cmd(cmd));
             }
         };
         let input_length = input.len();
