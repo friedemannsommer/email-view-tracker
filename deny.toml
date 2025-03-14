@@ -27,11 +27,10 @@ allow = [
 # [between 0.0 and 1.0].
 confidence-threshold = 0.9
 exceptions = [
-    { allow = ["BSD-3-Clause"], crate = "Inflector" },
     { allow = ["BSD-3-Clause"], crate = "alloc-no-stdlib" },
     { allow = ["BSD-3-Clause"], crate = "alloc-stdlib" },
+    { allow = ["BSD-3-Clause"], crate = "brotli" },
     { allow = ["BSD-3-Clause"], crate = "encoding_rs" },
-    { allow = ["BSD-3-Clause"], crate = "instant" },
     { allow = ["BSD-3-Clause"], crate = "subtle" },
     { allow = ["ISC", "OpenSSL"], crate = "ring" },
     { allow = ["ISC"], crate = "rustls-webpki" },
