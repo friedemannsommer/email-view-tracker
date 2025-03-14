@@ -6,7 +6,7 @@ COPY ./artifact-binaries /opt/evt/binaries
 RUN chmod ug+x /opt/evt/scripts/copy-binary.sh
 RUN /opt/evt/scripts/copy-binary.sh
 
-FROM alpine:3.21.2
+FROM alpine:3.21.3
 ARG UID=1000
 ARG GID=1000
 RUN addgroup --gid "${GID}" evt \
