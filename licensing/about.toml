@@ -37,6 +37,9 @@ accepted = ["Unicode-DFS-2016"]
 [foldhash]
 accepted = ["Zlib"]
 
+[webpki-roots]
+accepted = ["CDLA-Permissive-2.0"]
+
 [webpki.clarify]
 license = "ISC"
 
