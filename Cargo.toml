@@ -20,7 +20,7 @@ members = [
 actix-identity = "=0.8.0"
 entity = { path = "entity" }
 fern = "=0.7.1"
-getrandom = "=0.3.2"
+getrandom = "=0.3.3"
 hex = "=0.4.3"
 log = "=0.4.27"
 markup = { git = "https://github.com/utkarshkukreti/markup.rs", rev = "c1dc693e0d3e312d52160c312961bf47f1cffbf7" }
@@ -41,7 +41,7 @@ version = "=0.10.1"
 features = ["cookie-session"]
 
 [dependencies.clap]
-version = "=4.5.35"
+version = "=4.5.38"
 default-features = false
 features = ["std", "color", "help", "usage", "error-context", "suggestions", "derive", "env", "cargo"]
 
@@ -51,7 +51,7 @@ default-features = false
 features = ["v4"]
 
 [dependencies.sea-orm]
-version = "=1.1.8"
+version = "=1.1.11"
 default-features = false
 features = ["sqlx-mysql", "sqlx-postgres", "runtime-actix-rustls"]
 
@@ -66,7 +66,7 @@ default-features = false
 features = ["sync"]
 
 [build-dependencies]
-lightningcss = "=1.0.0-alpha.65"
-proc-macro2 = "=1.0.94"
+lightningcss = "=1.0.0-alpha.66"
+proc-macro2 = "=1.0.95"
 quote = "=1.0.40"
 time = { version = "=0.3.41", features = ["macros", "formatting"] }
